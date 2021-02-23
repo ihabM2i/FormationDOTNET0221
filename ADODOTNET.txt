@@ -1,0 +1,24 @@
+Intro ADO.NET
+- La couche Ado.net => fournir des providers pour quelque SGBDR(SqlServer, Oracle, ODBC, Access)
+
+- Mode connecté
+
+1ere etape :
+	-Connexion à la base de données =>  une chaine de connexion (Adresse du serveur de la base de données, nom de la base de données 
+(pour sqlServer par defaut Master), nom d'utilisateur et mot de passe), pour le ADO.net on utilise des objets qui implemente l'interface IDBConnection
+(SqlServer => SqlConnection, Oracle => OracleConnection, Mysql => MysqlConnection)
+2eme etape :
+	-Executer des commandes (Execute des requêtes) => requête Sql, des objets qui implementent ICommand,
+	(SqlServer => SqlCommand, Oracle => OracleCommand...)
+3eme etape:
+	-Si La requête a des resultats, on récupère les resultats à l'aide d'objet de lecture.
+4eme etape :
+	-Libération de ressources et fermeture de connexion
+
+-Mode déconnecté
+
+Exercice 1
+Une application qui demande un nom, prenom, téléphone et qui 
+1-ajoute les données dans une table contact(id, nom, prenom, telephone)
+2-Afficher la totalité des contacts
+3-Rechercher les contacts soit par nom ou téléphone
