@@ -31,7 +31,7 @@ namespace CoursAdoDotNet
             //Requete à utiliser avec une execution de commande sans resultat
             //string request = "INSERT INTO personne(nom, prenom) values('titi', 'minet')";
             //Requete à utiliser avec une execution de commande avec un resultat unique
-            string nom = "abadi";
+            /*string nom = "abadi";
             string prenom = "prenom";
             //string request = "INSERT INTO personne(nom, prenom) OUTPUT INSERTED.id values('titi', 'minet')";
             //Requete avec des paramètres
@@ -46,9 +46,24 @@ namespace CoursAdoDotNet
             //int nbRow = command.ExecuteNonQuery();
             //Avec un resultat unqiue comme l'id de la ligne
             int id = (int)command.ExecuteScalar();
+            command.Dispose();*/
+
+            //Requete de lecture
+            string request = "SELECT id, nom, prenom from personne";
+            SqlCommand command = new SqlCommand(request, connection);
+            //Execute commande avec la méthode excuteReader qui renvoie un dataReader => objet pour lire les données du requete
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            //Pour lire la totalité des données
+            //La méthode read essaye de lire une ligne si true, elle déplace le curseur à la ligne suivante
+            while(reader.Read())
+            {
+                Console.WriteLine($"id : {reader.GetInt32(0)}, Nom : {reader.GetString(1)}, Prénom : {reader.GetString(2)}");
+            }
+            //ferme le reader
+            reader.Close();
             command.Dispose();
             connection.Close();
-            Console.WriteLine(id);
         }
     }
 }
