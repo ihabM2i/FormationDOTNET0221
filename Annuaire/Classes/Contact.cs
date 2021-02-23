@@ -33,7 +33,49 @@ namespace Annuaire.Classes
             return Id > 0;
         }
 
+        public bool Delete()
+        {
+            //Instruction de suppression dans la base de données
+            string request = "DELETE FROM contact where id=@id";
+            command = new SqlCommand(request, DataBase.Connection);
+            command.Parameters.Add(new SqlParameter("@id", Id));
+            DataBase.Connection.Open();
+            int nbRow = command.ExecuteNonQuery();
+            command.Dispose();
+            DataBase.Connection.Close();
+            return nbRow == 1;
+        }
 
+        public bool Update()
+        {
+            //Instruction Mise à jour dans la base de données après modification
+            return false;
+        }
+
+        public static Contact GetContactById(int id)
+        {
+            Contact contact = null;
+            //Une méthode pour récupérer un contact avec son id
+            string request = "SELECT id, nom, prenom, telephone from contact where id = @id";
+            command = new SqlCommand(request, DataBase.Connection);
+            command.Parameters.Add(new SqlParameter("@id", id));
+            DataBase.Connection.Open();
+            reader = command.ExecuteReader();
+            if(reader.Read())
+            {
+                contact = new Contact
+                {
+                    Id = reader.GetInt32(0),
+                    Nom = reader.GetString(1),
+                    Prenom = reader.GetString(2),
+                    Telephone = reader.GetString(3)
+                };
+            }
+            reader.Close();
+            command.Dispose();
+            DataBase.Connection.Close();
+            return contact;
+        }
 
         public static List<Contact> GetContacts()
         {
@@ -81,6 +123,13 @@ namespace Annuaire.Classes
             }
             reader.Close();
             command.Dispose();
+
+            //Requete 2
+            request = "deuxième requete";
+            command = new SqlCommand(request, DataBase.Connection);
+            //executer la commande
+
+
             DataBase.Connection.Close();
             return contacts;
         }

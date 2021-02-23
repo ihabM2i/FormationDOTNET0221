@@ -25,6 +25,9 @@ namespace Annuaire.Classes
                     case "3":
                         ActionRechercherContact();
                         break;
+                    case "4":
+                        ActionSupprimerContact();
+                        break;
                 }
             } while(choix != "0");
         }
@@ -33,6 +36,7 @@ namespace Annuaire.Classes
             Console.WriteLine("1--Ajouter un contact");
             Console.WriteLine("2--Afficher la liste des contacts");
             Console.WriteLine("3--Rechercher des contacts");
+            Console.WriteLine("4--Supprimer un contact");
         }
 
         private void ActionAjouterContact()
@@ -75,6 +79,29 @@ namespace Annuaire.Classes
             {
                 Console.WriteLine("Aucun contact trouvé");
             }
+        }
+
+        private void ActionSupprimerContact()
+        {
+            Contact contact = ActionRechercheContact();
+            if(contact != null)
+            {
+                contact.Delete();
+                Console.WriteLine($"Le contact : {contact} a été supprimé");
+            }
+        }
+
+        private Contact ActionRechercheContact()
+        {
+            Console.Clear();
+            Console.Write("Merci de saisir l'id du contact : ");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Contact contact = Contact.GetContactById(id);
+            if(contact == null)
+            {
+                Console.WriteLine("Aucun contact avec cet id");
+            }
+            return contact;
         }
     }
 }

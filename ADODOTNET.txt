@@ -19,6 +19,8 @@ Intro ADO.NET
 
 Exercice 1
 Une application qui demande un nom, prenom, téléphone et qui 
-1-ajoute les données dans une table contact(id, nom, prenom, telephone)
-2-Afficher la totalité des contacts
-3-Rechercher les contacts soit par nom ou téléphone
+1- ajoute les données dans une table contact(id, nom, prenom, telephone)
+2- Afficher la totalité des contacts
+3- Rechercher les contacts soit par nom ou téléphone
+4- Suppression
+5- modification d'un contact
