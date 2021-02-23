@@ -354,3 +354,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+Annuaire/Tools/DataBase.cs

@@ -22,6 +22,9 @@ namespace Annuaire.Classes
                     case "2":
                         ActionAfficherListeContacts();
                         break;
+                    case "3":
+                        ActionRechercherContact();
+                        break;
                 }
             } while(choix != "0");
         }
@@ -29,6 +32,7 @@ namespace Annuaire.Classes
         {
             Console.WriteLine("1--Ajouter un contact");
             Console.WriteLine("2--Afficher la liste des contacts");
+            Console.WriteLine("3--Rechercher des contacts");
         }
 
         private void ActionAjouterContact()
@@ -52,6 +56,24 @@ namespace Annuaire.Classes
             foreach(Contact c in Contact.GetContacts())
             {
                 Console.WriteLine(c);
+            }
+        }
+
+        private void ActionRechercherContact()
+        {
+            Console.Write("Merci de saisir la recherche : ");
+            string search = Console.ReadLine();
+            List<Contact> contacts = Contact.SearchContacts(search);
+            if(contacts.Count > 0)
+            {
+                foreach(Contact c in contacts)
+                {
+                    Console.WriteLine(c);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Aucun contact trouvé");
             }
         }
     }
