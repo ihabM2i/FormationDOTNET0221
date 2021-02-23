@@ -1,0 +1,7 @@
+git clone https://github.com/ihabM2i/FormationDOTNET0221.git Nom_dossier
+cd Nom_dossier ou FromationDOTNET0221
+git pull origin master
+git checkout -b yannick
+git checkout master
+git checkout yannick
+git merge master
