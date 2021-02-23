@@ -49,7 +49,17 @@ namespace Annuaire.Classes
         public bool Update()
         {
             //Instruction Mise à jour dans la base de données après modification
-            return false;
+            string request = "update contact set nom = @nom, prenom=@prenom, telephone=@telephone where id=@id";
+            command = new SqlCommand(request, DataBase.Connection);
+            command.Parameters.Add(new SqlParameter("@nom", Nom));
+            command.Parameters.Add(new SqlParameter("@prenom", Prenom));
+            command.Parameters.Add(new SqlParameter("@telephone", Telephone));
+            command.Parameters.Add(new SqlParameter("@id", Id));
+            DataBase.Connection.Open();
+            int nbRow = command.ExecuteNonQuery();
+            command.Dispose();
+            DataBase.Connection.Close();
+            return nbRow == 1;
         }
 
         public static Contact GetContactById(int id)

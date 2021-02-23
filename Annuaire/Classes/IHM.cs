@@ -28,6 +28,9 @@ namespace Annuaire.Classes
                     case "4":
                         ActionSupprimerContact();
                         break;
+                    case "5":
+                        ActionMiseAJourContact();
+                        break;
                 }
             } while(choix != "0");
         }
@@ -37,6 +40,7 @@ namespace Annuaire.Classes
             Console.WriteLine("2--Afficher la liste des contacts");
             Console.WriteLine("3--Rechercher des contacts");
             Console.WriteLine("4--Supprimer un contact");
+            Console.WriteLine("5--Modifier un contact");
         }
 
         private void ActionAjouterContact()
@@ -90,6 +94,28 @@ namespace Annuaire.Classes
                 Console.WriteLine($"Le contact : {contact} a été supprimé");
             }
         }
+
+        private void ActionMiseAJourContact()
+        {
+            Contact contact = ActionRechercheContact();
+            if (contact != null)
+            {
+                Console.Write("Merci de saisir le nom : ");
+                string nom = Console.ReadLine();
+                contact.Nom = nom != "" ? nom : contact.Nom;
+                Console.Write("Merci de saisir le prénom : ");
+                string prenom = Console.ReadLine();
+                contact.Prenom = prenom != "" ? prenom : contact.Prenom;
+                Console.Write("Merci de saisir le téléphone : ");
+                string telephone = Console.ReadLine();
+                contact.Telephone= telephone != "" ? telephone : contact.Telephone;
+                if(contact.Update())
+                {
+                    Console.WriteLine("Mise à jour effectuée");
+                }
+            }
+        }
+
 
         private Contact ActionRechercheContact()
         {
