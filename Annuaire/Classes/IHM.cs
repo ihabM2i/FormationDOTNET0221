@@ -19,12 +19,16 @@ namespace Annuaire.Classes
                     case "1":
                         ActionAjouterContact();
                         break;
+                    case "2":
+                        ActionAfficherListeContacts();
+                        break;
                 }
             } while(choix != "0");
         }
         private void Menu()
         {
             Console.WriteLine("1--Ajouter un contact");
+            Console.WriteLine("2--Afficher la liste des contacts");
         }
 
         private void ActionAjouterContact()
@@ -39,6 +43,15 @@ namespace Annuaire.Classes
             if(contact.Save())
             {
                 Console.WriteLine("Contact ajouté avec id : " + contact.Id);
+            }
+        }
+
+        private void ActionAfficherListeContacts()
+        {
+            Console.WriteLine("---La liste des contacts---");
+            foreach(Contact c in Contact.GetContacts())
+            {
+                Console.WriteLine(c);
             }
         }
     }

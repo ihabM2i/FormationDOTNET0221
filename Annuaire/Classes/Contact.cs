@@ -12,8 +12,8 @@ namespace Annuaire.Classes
         private string nom;
         private string prenom;
         private string telephone;
-        private SqlCommand command;
-
+        private static SqlCommand command;
+        private static SqlDataReader reader;
         public int Id { get => id; set => id = value; }
         public string Nom { get => nom; set => nom = value; }
         public string Prenom { get => prenom; set => prenom = value; }
@@ -31,6 +31,35 @@ namespace Annuaire.Classes
             command.Dispose();
             DataBase.Connection.Close();
             return Id > 0;
+        }
+
+        public static List<Contact> GetContacts()
+        {
+            List<Contact> contacts = new List<Contact>();
+            string request = "SELECT id, nom, prenom, telephone from contact";
+            command = new SqlCommand(request, DataBase.Connection);
+            DataBase.Connection.Open();
+            reader = command.ExecuteReader();
+            while(reader.Read())
+            {
+                Contact contact = new Contact
+                {
+                    Id = reader.GetInt32(0),
+                    Nom = reader.GetString(1),
+                    Prenom = reader.GetString(2),
+                    Telephone = reader.GetString(3)
+                };
+                contacts.Add(contact);
+            }
+            reader.Close();
+            command.Dispose();
+            DataBase.Connection.Close();
+            return contacts;
+        }
+
+        public override string ToString()
+        {
+            return $"Id : {Id}, Nom : {Nom}, Prénom : {Prenom}, Téléphone : {Telephone}";
         }
     }
 }
