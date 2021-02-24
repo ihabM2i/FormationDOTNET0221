@@ -30,3 +30,14 @@ On cherche à modifier notre application annuaire pour ajouter la possibilité d
 1- A la création d'un contact, avoir la possibilité d'ajouter 1 ou plusieurs mails pour chaque contact
 2- A la recherche d'un contact, Afficher le contact et ses mails
 3- Modifier le menu modification et suppression pour prendre en compte la partie mail.
+
+
+TP :
+
+- Ajouter une couche base de données au projet caisse enregistreuse
+Aide :
+-Structure des tables
+-Modifier les classes
+-Lister les méthodes de persistance nécessaires
+-Coder les méthodes
+
