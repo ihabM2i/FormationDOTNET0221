@@ -113,10 +113,27 @@ namespace Annuaire.Classes
         private void ActionSupprimerContact()
         {
             Contact contact = ActionRechercheContact();
+            bool allMailsDeleted = true;
             if(contact != null)
             {
-                contact.Delete();
-                Console.WriteLine($"Le contact : {contact} a été supprimé");
+                foreach(Email e in contact.Mails)
+                {
+                    if(!e.Delete())
+                    {
+                        allMailsDeleted = false;
+                        break;
+                    }
+                }
+                if(allMailsDeleted)
+                {
+                    contact.Delete();
+                    Console.WriteLine($"Le contact : {contact} a été supprimé");
+                }
+                else
+                {
+                    Console.WriteLine("Erreur suppression mails");
+                }
+                
             }
         }
 
@@ -150,6 +167,7 @@ namespace Annuaire.Classes
             Contact contact = Contact.GetContactById(id);
             if(contact == null)
             {
+                contact.Mails = Email.GetMails(contact.Id);
                 Console.WriteLine("Aucun contact avec cet id");
             }
             return contact;

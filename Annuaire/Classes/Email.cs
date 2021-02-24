@@ -59,5 +59,17 @@ namespace Annuaire.Classes
             DataBase.Connection.Close();
             return liste;
         }
+
+        public bool Delete()
+        {
+            request = "DELETE FROM mail where id = @id";
+            command = new SqlCommand(request, DataBase.Connection);
+            command.Parameters.Add(new SqlParameter("@id", Id));
+            DataBase.Connection.Open();
+            int nbRow = command.ExecuteNonQuery();
+            command.Dispose();
+            DataBase.Connection.Close();
+            return nbRow == 1;
+        }
     }
 }
