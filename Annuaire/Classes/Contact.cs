@@ -19,6 +19,10 @@ namespace Annuaire.Classes
         public string Prenom { get => prenom; set => prenom = value; }
         public string Telephone { get => telephone; set => telephone = value; }
 
+        //public Contact(int id)
+        //{
+        //    //request pour chercher le contact
+        //}
         public bool Save()
         {
             string request = "INSERT INTO contact (nom, prenom, telephone) OUTPUT INSERTED.ID values (@nom, @prenom,@telephone)";

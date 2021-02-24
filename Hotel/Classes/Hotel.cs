@@ -28,8 +28,10 @@ namespace Hotel.Classes
             Clients = sauvegarde.LireClients();
             Reservations = sauvegarde.LireReservations();
             Chambres = sauvegarde.LireChambres();
-            if(Chambres.Count == 0)
+            if (Chambres.Count == 0)
                 GenerationAleatoireChambres();
+            else
+                Chambres.ForEach(c => c.ChangeStatut += NotificationService.Chambre_ChangeStatut);
         }
 
         private void GenerationAleatoireChambres()

@@ -16,7 +16,14 @@ namespace Hotel.Classes
         public int Numero { get => numero; set => numero = value; }
         public decimal Tarif { get => tarif; set => tarif = value; }
         public int NbOccp { get => nbOccp; set => nbOccp = value; }
-        public StatutChambre Statut { get => statut; set => statut = value; }
+        public StatutChambre Statut { get => statut; set { 
+                statut = value;
+                if (ChangeStatut != null)
+                {
+                    ChangeStatut(Numero, value);
+                }
+            } 
+        }
 
         private static int compteur = 0;
         public Chambre()
