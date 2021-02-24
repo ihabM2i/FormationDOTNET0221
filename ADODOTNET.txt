@@ -41,3 +41,10 @@ Aide :
 -Lister les méthodes de persistance nécessaires
 -Coder les méthodes
 
+
+Liste des tables:
+	- Product : id, title, price, stock
+	- Order : id, total, datetime, status
+	- Product_order : id, orderId, productId
+	- payment : id, amount, orderId, typePayment, datetime
+
