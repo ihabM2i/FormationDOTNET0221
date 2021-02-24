@@ -55,9 +55,14 @@ namespace Annuaire.Classes
             if(contact.Save())
             {
                 Console.WriteLine("Contact ajouté avec id : " + contact.Id);
+                ActionAjouterEmail(contact);
             }
         }
 
+        private void ActionAjouterEmail(Contact contact)
+        {
+            //ajout des mails
+        }
         private void ActionAfficherListeContacts()
         {
             Console.WriteLine("---La liste des contacts---");
@@ -72,10 +77,13 @@ namespace Annuaire.Classes
             Console.Write("Merci de saisir la recherche : ");
             string search = Console.ReadLine();
             List<Contact> contacts = Contact.SearchContacts(search);
+            //Pour une récupération des mails en lazy
+
             if(contacts.Count > 0)
             {
                 foreach(Contact c in contacts)
                 {
+                    c.Mails = Email.GetMails(c.Id);
                     Console.WriteLine(c);
                 }
             }

@@ -12,12 +12,14 @@ namespace Annuaire.Classes
         private string nom;
         private string prenom;
         private string telephone;
+        private List<Email> mails;
         private static SqlCommand command;
         private static SqlDataReader reader;
         public int Id { get => id; set => id = value; }
         public string Nom { get => nom; set => nom = value; }
         public string Prenom { get => prenom; set => prenom = value; }
         public string Telephone { get => telephone; set => telephone = value; }
+        public List<Email> Mails { get => mails; set => mails = value; }
 
         //public Contact(int id)
         //{
@@ -93,6 +95,8 @@ namespace Annuaire.Classes
 
         public static List<Contact> GetContacts()
         {
+            //Pour une récupération totale avec les mails, 
+            //on modifie la requete en ajoutant la jointure avec la table mail
             List<Contact> contacts = new List<Contact>();
             string request = "SELECT id, nom, prenom, telephone from contact";
             command = new SqlCommand(request, DataBase.Connection);
@@ -117,6 +121,7 @@ namespace Annuaire.Classes
 
         public static List<Contact> SearchContacts(string search)
         {
+            
             List<Contact> contacts = new List<Contact>();
             string request = "SELECT id, nom, prenom, telephone from contact where " +
                 "nom like @search OR prenom like @search OR telephone like @search";
