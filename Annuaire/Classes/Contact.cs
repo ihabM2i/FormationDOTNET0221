@@ -25,6 +25,11 @@ namespace Annuaire.Classes
         //{
         //    //request pour chercher le contact
         //}
+
+        public Contact()
+        {
+            Mails = new List<Email>();
+        }
         public bool Save()
         {
             string request = "INSERT INTO contact (nom, prenom, telephone) OUTPUT INSERTED.ID values (@nom, @prenom,@telephone)";
@@ -98,20 +103,35 @@ namespace Annuaire.Classes
             //Pour une récupération totale avec les mails, 
             //on modifie la requete en ajoutant la jointure avec la table mail
             List<Contact> contacts = new List<Contact>();
-            string request = "SELECT id, nom, prenom, telephone from contact";
+            string request = "SELECT " +
+                "c.id as contactId, c.nom, c.prenom, c.telephone, m.id as mailId, m.mail" +
+                " from contact c left join Mail m on c.id = m.contactId";
             command = new SqlCommand(request, DataBase.Connection);
             DataBase.Connection.Open();
             reader = command.ExecuteReader();
-            while(reader.Read())
+            Contact contact = null;
+            while (reader.Read())
             {
-                Contact contact = new Contact
+                if(contact == null || contact.Id != reader.GetInt32(0))
                 {
-                    Id = reader.GetInt32(0),
-                    Nom = reader.GetString(1),
-                    Prenom = reader.GetString(2),
-                    Telephone = reader.GetString(3)
-                };
-                contacts.Add(contact);
+                    contact = new Contact
+                    {
+                        Id = reader.GetInt32(0),
+                        Nom = reader.GetString(1),
+                        Prenom = reader.GetString(2),
+                        Telephone = reader.GetString(3)
+                    };
+                    contacts.Add(contact);
+                }
+                if(reader.GetValue(4).GetType() != typeof(DBNull))
+                {
+                    Email e = new Email
+                    {
+                        Id = reader.GetInt32(4),
+                        Mail = reader.GetString(5)
+                    };
+                    contact.Mails.Add(e);
+                }
             }
             reader.Close();
             command.Dispose();
@@ -155,7 +175,13 @@ namespace Annuaire.Classes
 
         public override string ToString()
         {
-            return $"Id : {Id}, Nom : {Nom}, Prénom : {Prenom}, Téléphone : {Telephone}";
+            string retour = $"=====Contact : Id: { Id}, Nom: { Nom}, Prénom: { Prenom}, Téléphone: { Telephone}\n";
+            retour += "--Liste mails : \n";
+            Mails.ForEach(e =>
+            {
+                retour += $"{e.ToString()}\n";
+            });
+            return retour;
         }
     }
 }

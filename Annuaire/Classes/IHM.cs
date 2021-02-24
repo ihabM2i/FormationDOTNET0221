@@ -61,6 +61,22 @@ namespace Annuaire.Classes
 
         private void ActionAjouterEmail(Contact contact)
         {
+            string choix;
+            do
+            {
+                Console.Write("Ajouter un mail (o/n) ? ");
+                choix = Console.ReadLine();
+                if(choix == "o")
+                {
+                    Console.Write("Merci de saisir le mail : ");
+                    string mail = Console.ReadLine();
+                    Email e = new Email { Mail = mail };
+                    if(e.Save(contact.Id))
+                    {
+                        Console.WriteLine("Mail ajouté");
+                    }
+                }
+            } while (choix != "n");
             //ajout des mails
         }
         private void ActionAfficherListeContacts()
@@ -77,12 +93,13 @@ namespace Annuaire.Classes
             Console.Write("Merci de saisir la recherche : ");
             string search = Console.ReadLine();
             List<Contact> contacts = Contact.SearchContacts(search);
-            //Pour une récupération des mails en lazy
+            
 
             if(contacts.Count > 0)
             {
                 foreach(Contact c in contacts)
                 {
+                    //Pour une récupération des mails en lazy
                     c.Mails = Email.GetMails(c.Id);
                     Console.WriteLine(c);
                 }
