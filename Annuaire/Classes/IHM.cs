@@ -113,18 +113,21 @@ namespace Annuaire.Classes
         private void ActionSupprimerContact()
         {
             Contact contact = ActionRechercheContact();
-            bool allMailsDeleted = true;
+            
             if(contact != null)
             {
-                foreach(Email e in contact.Mails)
-                {
-                    if(!e.Delete())
-                    {
-                        allMailsDeleted = false;
-                        break;
-                    }
-                }
-                if(allMailsDeleted)
+                //lazy delete
+                //foreach(Email e in contact.Mails)
+                //{
+                //    if(!e.Delete())
+                //    {
+                //        allMailsDeleted = false;
+                //        break;
+                //    }
+                //}
+                //Eager delete
+                bool allMailsDeleted = Email.deleteMailsByContact(contact.Id);
+                if (allMailsDeleted)
                 {
                     contact.Delete();
                     Console.WriteLine($"Le contact : {contact} a été supprimé");

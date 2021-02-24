@@ -71,5 +71,18 @@ namespace Annuaire.Classes
             DataBase.Connection.Close();
             return nbRow == 1;
         }
+
+        //Deuxième manière de supprimer les emails d'un contact
+        public static bool deleteMailsByContact(int contactId)
+        {
+            request = "DELETE FROM mail where contactId = @id";
+            command = new SqlCommand(request, DataBase.Connection);
+            command.Parameters.Add(new SqlParameter("@id", contactId));
+            DataBase.Connection.Open();
+            int nbRow = command.ExecuteNonQuery();
+            command.Dispose();
+            DataBase.Connection.Close();
+            return nbRow >= 1;
+        }
     }
 }
