@@ -11,7 +11,7 @@ namespace Hotel.Classes
         private string prenom;
         private string telephone;
 
-        public int Id { get => id; }
+        public int Id { get => id; set => id = value; }
         public string Nom { get => nom; set => nom = value; }
         public string Prenom { get => prenom; set => prenom = value; }
         public string Telephone { get => telephone; set => telephone = value; }
@@ -20,7 +20,15 @@ namespace Hotel.Classes
 
         public Client()
         {
-            id = ++compteur;
+            //id = ++compteur;
+        }
+
+        public Client(int id, string nom, string prenom, string telephone)
+        {
+            this.id = id;
+            Nom = nom;
+            Prenom = prenom;
+            Telephone = telephone;
         }
 
         public override string ToString()

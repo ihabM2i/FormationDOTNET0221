@@ -1,176 +1,236 @@
-﻿using Hotel.Classes;
+﻿using Annuaire.Tools;
+using Hotel.Classes;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Data.SqlClient;
 using System.Text;
 
 namespace Hotel.Tools
 {
     class Sauvegarde
     {
-        private StreamWriter writer;
-        private StreamReader reader;
-
-        private string pathClient = "clients.csv";
-        private string pathReservation = "reservations.csv";
-        private string pathChambre = "chambres.csv";
-        private string pathReservationsChambres = "reservations-chambres.csv";
-
-        private string nomHotel;
-
+        private int hotelId;
+        private static string request;
+        private static SqlCommand command;
+        private static SqlDataReader reader;
+        private static SqlTransaction transaction;
         public Sauvegarde(string nom)
         {
-            nomHotel = nom;
+            bool hotelExist = false;
+            request = "SELECT id from hotel where nom = @nom";
+            command = new SqlCommand(request, DataBase.Connection);
+            command.Parameters.Add(new SqlParameter("@nom", nom));
+            DataBase.Connection.Open();
+            reader = command.ExecuteReader();
+            if(reader.Read())
+            {
+                hotelExist = true;
+                hotelId = reader.GetInt32(0);
+            }
+            reader.Close();
+            command.Dispose();
+            if(!hotelExist)
+            {
+                request = "INSERT INTO hotel (nom) OUTPUT INSERTED.ID values (@nom)";
+                command = new SqlCommand(request, DataBase.Connection);
+                command.Parameters.Add(new SqlParameter("@nom", nom));
+                hotelId = (int)command.ExecuteScalar();
+                command.Dispose();
+            }
+            DataBase.Connection.Close();
         }
         public List<Client> LireClients()
-        {
-            //Récupérer les clients du fichier clients
+        {            
             List<Client> listes = new List<Client>();
-            if(File.Exists($"{nomHotel}-{pathClient}"))
+            request = "SELECT id, nom, prenom, telephone from client where hotel_id = @hotelId";
+            command = new SqlCommand(request, DataBase.Connection);
+            command.Parameters.Add(new SqlParameter("@hotelId", hotelId));
+            DataBase.Connection.Open();
+            reader = command.ExecuteReader();
+            while(reader.Read())
             {
-                reader = new StreamReader($"{nomHotel}-{pathClient}");
-                string ligne = reader.ReadLine();
-                while(ligne != null)
-                {
-                    string[] ligneTab = ligne.Split(';');
-                    Client client = new Client { Nom = ligneTab[0], Prenom = ligneTab[1], Telephone = ligneTab[2] };
-                    listes.Add(client);
-                    ligne = reader.ReadLine();
-                }
-                reader.Close();
+                Client c = new Client(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3));
+                listes.Add(c);
             }
+            reader.Close();
+            LiberCommandeEtFermerConnexion();
             return listes;
         }
         public void EcrireClients(Client client)
         {
-            writer = new StreamWriter($"{nomHotel}-{pathClient}", true);
-            writer.WriteLine($"{client.Nom};{client.Prenom};{client.Telephone}");
-            writer.Close();
+            request = "INSERT INTO client (nom, prenom, telephone, hotel_id) OUTPUT INSERTED.ID values " +
+                "(@nom,@prenom,@telephone,@hotel_id)";
+            command = new SqlCommand(request, DataBase.Connection);
+            command.Parameters.Add(new SqlParameter("@nom", client.Nom));
+            command.Parameters.Add(new SqlParameter("@prenom", client.Prenom));
+            command.Parameters.Add(new SqlParameter("@telephone", client.Telephone));
+            command.Parameters.Add(new SqlParameter("@hotel_id", hotelId));
+            DataBase.Connection.Open();
+            client.Id = (int)command.ExecuteScalar();
+            LiberCommandeEtFermerConnexion();
         }
 
         public List<Chambre> LireChambres()
         {
             List<Chambre> listes = new List<Chambre>();
-            if (File.Exists($"{nomHotel}-{pathChambre}"))
+            request = "SELECT id, tarif, statut, nbOccp from chambre where hotel_id = @hotelId";
+            command = new SqlCommand(request, DataBase.Connection);
+            command.Parameters.Add(new SqlParameter("@hotelId", hotelId));
+            DataBase.Connection.Open();
+            reader = command.ExecuteReader();
+            while (reader.Read())
             {
-                reader = new StreamReader($"{nomHotel}-{pathChambre}");
-                string ligne = reader.ReadLine();
-                while (ligne != null)
+                Chambre chambre = new Chambre()
                 {
-                    string[] ligneTab = ligne.Split(';');
-                    Chambre chambre= new Chambre
-                    {
-                        Numero = Convert.ToInt32(ligneTab[0]),
-                        Tarif = Convert.ToDecimal(ligneTab[1]),
-                        NbOccp = Convert.ToInt32(ligneTab[2]),
-                        //Statut = (StatutChambre)Convert.ToInt32(ligneTab[3])
-                        //Parse de l'enum permet de convertir une chaine de caractère en valeur de enum
-                        //Statut = (StatutChambre)Enum.Parse(typeof(StatutChambre), ligneTab[3])
-                        Statut = Extension.ConvertEnum<StatutChambre>(ligneTab[3])
-                    };
-                    listes.Add(chambre);
-                    ligne = reader.ReadLine();
-                }
-                reader.Close();
+                    Numero = reader.GetInt32(0),
+                    Tarif = reader.GetDecimal(1),
+                    NbOccp = reader.GetInt32(3),
+                    Statut = (StatutChambre)Convert.ToInt32(reader.GetString(2))
+                };
+
+                listes.Add(chambre);
             }
+            reader.Close();
+            LiberCommandeEtFermerConnexion();
             return listes;
         }
 
         public void EcrireChambres(List<Chambre> chambres)
         {
-            writer = new StreamWriter($"{nomHotel}-{pathChambre}");
-            foreach(Chambre c in chambres)
+            DataBase.Connection.Open();
+            transaction = DataBase.Connection.BeginTransaction();
+            try
             {
-                writer.WriteLine($"{c.Numero};{c.Tarif};{c.NbOccp};{c.Statut}");
+                foreach (Chambre chambre in chambres)
+                {
+                    EcrireChambre(chambre);
+                }
+                transaction.Commit();
+            }catch(Exception e)
+            {
+                transaction.Rollback();
             }
-            writer.Close();
+            DataBase.Connection.Close();
+
+            
         }
 
         public List<Reservation> LireReservations()
         {
-            List<Client> listeClients = LireClients();
-
-            //On récupère dans un premier temps le numéro, statut et client (à l'aide du téléphone client) du premier fichier reservations.csv
             List<Reservation> listes = new List<Reservation>();
-            if (File.Exists($"{nomHotel}-{pathChambre}"))
+            
+            request = "SELECT r.id, r.statut, c.id, c.nom, c.prenom, c.telephone " +
+                "from reservation r inner join client c on c.id = r.client_id where r.hotel_id = @hotelId ";
+            command = new SqlCommand(request, DataBase.Connection);
+            command.Parameters.Add(new SqlParameter("@hotelId", hotelId));
+            DataBase.Connection.Open();
+            reader = command.ExecuteReader();
+            while(reader.Read())
             {
-                reader = new StreamReader($"{nomHotel}-{pathReservation}");
-                string ligne = reader.ReadLine();
-                while (ligne != null)
+                Reservation r = new Reservation()
                 {
-                    string[] ligneTab = ligne.Split(';');
-                    Reservation reservation = new Reservation
-                    {
-                        Numero = Convert.ToInt32(ligneTab[0]),
-                        Statut = Extension.ConvertEnum<StatutReservation>(ligneTab[1]),
-                        Client = listeClients.Find(c => c.Telephone ==  ligneTab[2])
-                    };
-                    listes.Add(reservation);
-                    ligne = reader.ReadLine();
-                }
-                reader.Close();
+                    Numero = reader.GetInt32(0),
+                    Statut = (StatutReservation)Convert.ToInt32(reader.GetString(1)),
+                    Client = new Client(reader.GetInt32(2), reader.GetString(3), reader.GetString(4), reader.GetString(5))
+                };
+                listes.Add(r);
             }
-
-            //à l'aide de la méthode lireChambreReservation, on récupère les chambres de chaque réservation
-            foreach(Reservation r in listes)
+            reader.Close();
+            command.Dispose();
+            //Récupération des chambres se fait en lazy ça implique un nombre de requetes, par exemple pour 1000 réservations; de l'ordre(min 11000 requetes) <> en utilisant le mode eager (on sera à un ordre de 1000 requetes)
+            foreach (Reservation r in listes)
             {
                 LireChambresReservation(r);
             }
+            DataBase.Connection.Close();
             return listes;
         }
 
 
         private void LireChambresReservation(Reservation reservation)
         {
-            List<Chambre> listeChambres = LireChambres();
-            if (File.Exists($"{nomHotel}-{pathReservationsChambres}"))
+            request = "SELECT id, tarif, statut, nbOccp from reservation_chambre rc inner join chambre c on c.id = rc.chambre_id " +
+                "where rc.reservation_id = @reservationId";
+            command = new SqlCommand(request, DataBase.Connection);
+            command.Parameters.Add(new SqlParameter("@reservationId", reservation.Numero));
+            DataBase.Connection.Open();
+            reader = command.ExecuteReader();
+            while (reader.Read())
             {
-                reader = new StreamReader($"{nomHotel}-{pathReservationsChambres}");
-                string ligne = reader.ReadLine();
-                while (ligne != null)
+                Chambre chambre = new Chambre()
                 {
-                    string[] ligneTab = ligne.Split(';');
-                    if(Convert.ToInt32(ligneTab[0]) == reservation.Numero)
-                    {
-                        Chambre chambre = listeChambres.Find(c => c.Numero == Convert.ToInt32(ligneTab[1]));
-                        reservation.Chambres.Add(chambre);
-                    }
-                    ligne = reader.ReadLine();
-                }
-                reader.Close();
+                    Numero = reader.GetInt32(0),
+                    Tarif = reader.GetDecimal(1),
+                    NbOccp = reader.GetInt32(3),
+                    Statut = (StatutChambre)Convert.ToInt32(reader.GetString(2))
+                };
+
+                reservation.Chambres.Add(chambre);
             }
+            reader.Close();
+            command.Dispose();
         }
-       
+
 
         public void EcrireReservations(Reservation reservation)
         {
-            //On commence par ecrire, dans un premier temps, dans le fichier reservation(numero, statut, telephoneClient)
-            writer = new StreamWriter($"{nomHotel}-{pathReservation}", append:true);
-            writer.WriteLine($"{reservation.Numero};{reservation.Statut};{reservation.Client.Telephone}");
-            writer.Close();
-            //Ensuite on sauvegarde le numéro de reservation et les numéro de chambres dans un deuxième fichier reservations-chambres
-            EcrireReservationChambres(reservation);
+            DataBase.Connection.Open();
+            transaction = DataBase.Connection.BeginTransaction();
+            try
+            {
+                string request = "INSERT INTO reservation (statut, hotel_id)  OUTPUT INSERTED.ID " +
+                "values (@statut, @hotelId)";
+                command = new SqlCommand(request, DataBase.Connection, transaction);
+                command.Parameters.Add(new SqlParameter("@statut", reservation.Statut));
+                command.Parameters.Add(new SqlParameter("@hotelId", hotelId));
+                reservation.Numero = (int)command.ExecuteScalar();
+                command.Dispose();
+                EcrireReservationChambres(reservation);
+                transaction.Commit();
+            }
+            catch(Exception e)
+            {
+                transaction.Rollback();
+            }
+            DataBase.Connection.Close();
         }
 
-        public void MiseAjourReservations(List<Reservation> reservations)
+        public void MiseAjourReservations(Reservation reservation)
         {
-            writer = new StreamWriter($"{nomHotel}-{pathReservation}");
-            foreach(Reservation reservation in reservations)
-            {
-                writer.WriteLine($"{reservation.Numero};{reservation.Statut};{reservation.Client.Telephone}");
-            }
-            writer.Close();
+            
         }
 
         private void EcrireReservationChambres(Reservation reservation)
         {
-            writer = new StreamWriter($"{nomHotel}-{pathReservationsChambres}", append:true);
             foreach(Chambre c in reservation.Chambres)
             {
-                writer.WriteLine($"{reservation.Numero};{c.Numero}");
+                request = "INSERT into reservation_chambre (reservation_id, chambre_id) values " +
+                    "(@reservationId, @chambreId)";
+                command = new SqlCommand(request, DataBase.Connection, transaction);
+                command.Parameters.Add(new SqlParameter("@reservationId", reservation.Numero));
+                command.Parameters.Add(new SqlParameter("@chambreId", c.Numero));
+                command.ExecuteNonQuery();
+                command.Dispose();
             }
-            writer.Close();
         }
-        
+
+        private void LiberCommandeEtFermerConnexion()
+        {
+            command.Dispose();
+            DataBase.Connection.Close();
+        }
+
+        private void EcrireChambre(Chambre chambre)
+        {
+            request = "INSERT INTO Chambre (tarif, statut, nbOccp, hotel_id) output inserted.id values " +
+                "(@tarif, @statut, @nbOccp, @hotel_id)";
+            command = new SqlCommand(request, DataBase.Connection, transaction);
+            command.Parameters.Add(new SqlParameter("@tarif", chambre.Tarif));
+            command.Parameters.Add(new SqlParameter("@statut", chambre.Statut));
+            command.Parameters.Add(new SqlParameter("@nbOccp", chambre.NbOccp));
+            command.Parameters.Add(new SqlParameter("@hotel_id", hotelId));
+            chambre.Numero = (int)command.ExecuteScalar();
+            command.Dispose();
+        }
     }
 }

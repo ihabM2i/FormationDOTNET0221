@@ -19,7 +19,7 @@ namespace Hotel.Classes
 
         public Reservation()
         {
-            numero = ++compteur;
+            //numero = ++compteur;
             Chambres = new List<Chambre>();
             Statut = StatutReservation.Validee;
         }

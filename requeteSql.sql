@@ -52,3 +52,41 @@ CREATE TABLE payment (
 	payment_type varchar(255) not null,
 	payment_date datetime not null,
 )
+
+CREATE TABLE client (id int PRIMARY KEY IDENTITY (1,1),
+nom varchar(255) not null,
+prenom varchar(255) not null,
+telephone varchar(255) not null,
+hotel_id int not null,
+);
+
+
+
+
+CREATE TABLE hotel (id int PRIMARY KEY IDENTITY (1,1),
+nom varchar(255) not null);
+
+
+
+
+
+CREATE TABLE chambre (id int PRIMARY KEY IDENTITY (1,1),
+tarif decimal not null,
+nbOccp int not null,
+statut varchar(255) not null,
+hotel_id int not null);
+
+
+
+
+CREATE TABLE reservation (id int PRIMARY KEY IDENTITY (1,1),
+statut varchar(255) not null,
+client_id int not null,
+hotel_id int not null);
+
+
+
+
+CREATE TABLE reservation_chambre (id int PRIMARY KEY IDENTITY (1,1),
+reservation_id int not null,
+chambre_id int not null);

@@ -161,9 +161,9 @@ namespace Hotel.Classes
                 Chambre chambreHotel = Chambres.Find(c => c.Numero == chambre.Numero);
                 chambreHotel.UpdateStatut(StatutChambre.Libre);
             }
-            sauvegarde.EcrireChambres(Chambres);
+            //sauvegarde.EcrireChambres(Chambres);
             //Mise à jour des réservations
-            sauvegarde.MiseAjourReservations(Reservations);
+            sauvegarde.MiseAjourReservations(reservation);
             return true;
         }
 

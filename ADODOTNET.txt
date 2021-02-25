@@ -54,7 +54,11 @@ TP  Hotel:
 -Ajouter une couche persistance au TP Hotel:
  On part du principe :
 -un client ne peut être que dans un seul hotel, et un hotel peut avoir plusieurs clients.
+- client (id, nom, prenom, telephone, hotel_id)
+- hotel (id, nom)
 -Une réserervtion peut avoir plusieurs chambres et une chambre peut être dans plusieurs réservations
+- reservation (id, ..., client_id, hotel_id)
+- 
 -Un hôtel peut avoir plusieurs chambre et une chambre ne peut être que dans un seul hôtel
 -Un client peut avoir plusieurs réservations et une réservation ne peut avoir qu'un seul client.
 -un hôtel peut avoir plusieurs réservations et une réservation ne peut être que dans un seul hôtel.
