@@ -48,3 +48,14 @@ Liste des tables:
 	- Product_order : id, orderId, productId
 	- payment : id, amount, orderId, typePayment, datetime
 
+
+TP  Hotel:
+
+-Ajouter une couche persistance au TP Hotel:
+ On part du principe :
+-un client ne peut être que dans un seul hotel, et un hotel peut avoir plusieurs clients.
+-Une réserervtion peut avoir plusieurs chambres et une chambre peut être dans plusieurs réservations
+-Un hôtel peut avoir plusieurs chambre et une chambre ne peut être que dans un seul hôtel
+-Un client peut avoir plusieurs réservations et une réservation ne peut avoir qu'un seul client.
+-un hôtel peut avoir plusieurs réservations et une réservation ne peut être que dans un seul hôtel.
+
