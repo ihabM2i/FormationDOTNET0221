@@ -78,7 +78,6 @@ namespace Caisse.Classes
             command.Parameters.Add(new SqlParameter("@product_id", Id));
             command.Parameters.Add(new SqlParameter("@sale_id", orderId));        
             int nbRow = command.ExecuteNonQuery();
-            
             return nbRow > 0;
         }
 

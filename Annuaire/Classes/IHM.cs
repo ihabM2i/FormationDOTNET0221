@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Annuaire.Tools;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Text;
 
 namespace Annuaire.Classes
@@ -110,33 +112,67 @@ namespace Annuaire.Classes
             }
         }
 
+        //private void ActionSupprimerContact()
+        //{
+        //    Contact contact = ActionRechercheContact();
+        //    //Essayer de supprimer les emails et le contact en mode lazy 
+        //    //en utilisant le principe de transaction
+
+        //    if(contact != null)
+        //    {
+        //        //lazy delete
+        //        //foreach(Email e in contact.Mails)
+        //        //{
+        //        //    if(!e.Delete())
+        //        //    {
+        //        //        allMailsDeleted = false;
+        //        //        break;
+        //        //    }
+        //        //}
+        //        //Eager delete
+        //        bool allMailsDeleted = Email.deleteMailsByContact(contact.Id);
+        //        if (allMailsDeleted)
+        //        {
+        //            contact.Delete();
+        //            Console.WriteLine($"Le contact : {contact} a été supprimé");
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("Erreur suppression mails");
+        //        }
+                
+        //    }
+        //}
+
+
+            //Avec transaction
         private void ActionSupprimerContact()
         {
             Contact contact = ActionRechercheContact();
-            
-            if(contact != null)
+            //Essayer de supprimer les emails et le contact en mode lazy 
+            //en utilisant le principe de transaction
+
+            if (contact != null)
             {
-                //lazy delete
-                //foreach(Email e in contact.Mails)
-                //{
-                //    if(!e.Delete())
-                //    {
-                //        allMailsDeleted = false;
-                //        break;
-                //    }
-                //}
-                //Eager delete
-                bool allMailsDeleted = Email.deleteMailsByContact(contact.Id);
-                if (allMailsDeleted)
+                SqlTransaction transaction = null;
+                DataBase.Connection.Open();
+                transaction = DataBase.Connection.BeginTransaction();
+                try
                 {
-                    contact.Delete();
+                    foreach (Email e in contact.Mails)
+                    {
+                        e.Delete(transaction);
+                    }
+                    contact.Delete(transaction);
+                    transaction.Commit();
                     Console.WriteLine($"Le contact : {contact} a été supprimé");
                 }
-                else
+                catch(Exception e)
                 {
-                    Console.WriteLine("Erreur suppression mails");
+                    transaction.Rollback();
+                    Console.WriteLine("Erreur suppression : "+e.Message);
                 }
-                
+                DataBase.Connection.Close();
             }
         }
 

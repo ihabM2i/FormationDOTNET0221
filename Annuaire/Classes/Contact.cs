@@ -57,6 +57,18 @@ namespace Annuaire.Classes
             return nbRow == 1;
         }
 
+        public bool Delete(SqlTransaction transaction)
+        {
+            //Instruction de suppression dans la base de données
+            string request = "DELETE FROM contact where id=@id";
+            command = new SqlCommand(request, DataBase.Connection, transaction);
+            command.Parameters.Add(new SqlParameter("@id", Id));          
+            int nbRow = command.ExecuteNonQuery();
+            //pour le teste je leve une exception
+            throw new Exception("message");
+            return nbRow == 1;
+        }
+
         public bool Update()
         {
             //Instruction Mise à jour dans la base de données après modification

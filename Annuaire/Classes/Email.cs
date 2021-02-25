@@ -72,6 +72,16 @@ namespace Annuaire.Classes
             return nbRow == 1;
         }
 
+        //Avec une transaction
+        public bool Delete(SqlTransaction transaction)
+        {
+            request = "DELETE FROM mail where id = @id";
+            command = new SqlCommand(request, DataBase.Connection, transaction);
+            command.Parameters.Add(new SqlParameter("@id", Id));          
+            int nbRow = command.ExecuteNonQuery();
+            return nbRow == 1;
+        }
+
         //Deuxième manière de supprimer les emails d'un contact
         public static bool deleteMailsByContact(int contactId)
         {
