@@ -17,3 +17,38 @@ CREATE TABLE Mail (
 	mail varchar(255) not null,
 	contactId int not null
 )
+
+--Création des tables de l'application caisse
+CREATE TABLE product (
+	id int PRIMARY KEY IDENTITY(1,1),
+	title varchar(255) not null,
+	price  decimal not null,
+	stock int not null
+)
+
+--Table commande
+CREATE TABLE sale(
+	id int PRIMARY KEY IDENTITY(1,1),
+	total decimal not null,
+	date_sale datetime not null,
+	sale_status varchar(100) not null
+)
+
+--Table Produit acheté
+CREATE Table sale_product(
+	id int PRIMARY KEY IDENTITY(1,1),
+	sale_id int not null,
+	product_id int not null
+	-- pour ajouter une Foreign key (clé étrangère) vers la table sale
+	--CONSTRAINT fk_sale FOREIGN KEY (sale_id) REFERENCES Sale(id)
+)
+
+--Table paiement
+
+CREATE TABLE payment (
+	id int PRIMARY KEY IDENTITY(1,1),
+	amount decimal not null,
+	order_id int not null,
+	payment_type varchar(255) not null,
+	payment_date datetime not null,
+)

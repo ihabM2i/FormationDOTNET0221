@@ -24,19 +24,26 @@ namespace Caisse.Classes
             //Vérification sur les champs ....
             Product product = new Product() { Title = title, Price = price, Stock = stock };
             Products.Add(product);
-            return product;
+            if(product.Save())
+            {
+                return product;
+            }
+            return null;
         }
 
         public bool AddOrder(Order order)
         {
-            Orders.Add(order);
-            return true;
+            //Sauvegarde de la commande dans la base de données
+            return order.Save();
+            //Orders.Add(order);
+            //return true;
         }
 
         public Product SearchProductById(int id)
         {
             //Effectuer une recherche de produit avec une expression lambda et la méthode find des listes
-            return Products.Find(p => p.Id == id);
+            //return Products.Find(p => p.Id == id);
+            return Product.GetProductById(id);
         }
     }
 }
