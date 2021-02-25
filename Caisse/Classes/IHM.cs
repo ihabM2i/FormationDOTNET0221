@@ -90,9 +90,17 @@ namespace Caisse.Classes
             } while (choice == "1");
 
             //Ajoute la vente dans la caisse
-            cashRegister.AddOrder(order);
+            if(cashRegister.AddOrder(order))
+            {
+                Console.WriteLine(order);
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Erreur d'insertion commande, le paiement a été annulé ");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
             
-            Console.WriteLine(order);
             Console.WriteLine("une touche pour continuer....");
             Console.ReadLine();
             Console.Clear();

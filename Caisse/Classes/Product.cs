@@ -67,7 +67,21 @@ namespace Caisse.Classes
             DataBase.Connection.Close();
             return nbRow > 0;
         }
-        
+
+        public bool SaveProductOrder(int orderId, SqlTransaction transaction)
+        {
+            //sauvegarde le produit achété et on met à jour le stock
+            request = "INSERT INTO sale_product (product_id, sale_id) values " +
+                "(@product_id, @sale_id); " +
+                "UPDATE product set stock=stock-1 where id = @product_id";
+            command = new SqlCommand(request, DataBase.Connection, transaction);
+            command.Parameters.Add(new SqlParameter("@product_id", Id));
+            command.Parameters.Add(new SqlParameter("@sale_id", orderId));        
+            int nbRow = command.ExecuteNonQuery();
+            
+            return nbRow > 0;
+        }
+
         public static Product GetProductById(int id)
         {
             Product product = null;

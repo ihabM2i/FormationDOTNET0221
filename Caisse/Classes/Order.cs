@@ -86,39 +86,81 @@ namespace Caisse.Classes
             return response;
         }
 
+        //public bool Save()
+        //{
+        //    //sauvegarde dans la table sale
+        //    request = "INSERT INTO sale (total, date_sale, sale_status) OUTPUT INSERTED.ID " +
+        //        "values (@total, @date_sale, @sale_status)";
+        //    command = new SqlCommand(request, DataBase.Connection);
+        //    command.Parameters.Add(new SqlParameter("@total", Total));
+        //    command.Parameters.Add(new SqlParameter("@date_sale", DateOrder));
+        //    command.Parameters.Add(new SqlParameter("@sale_status", Status));
+        //    DataBase.Connection.Open();
+        //    id = (int)command.ExecuteScalar();
+        //    command.Dispose();
+        //    DataBase.Connection.Close();
+        //    bool paiement = false;
+        //    bool AllProductInserted = true;
+        //    if(id > 0)
+        //    {
+        //        //Ensuite sauvegarde dans la table sale_product
+        //        foreach(Product p in Products)
+        //        {
+        //            if(!p.SaveProductOrder(id))
+        //            {
+        //                AllProductInserted = false;
+        //                break;
+        //            }
+        //        }
+        //        //Sauvegarde du paiement
+        //        paiement = Payment.Save(id);
+
+        //        return paiement && AllProductInserted;
+        //    }
+
+        //    return false;
+        //}
+
+        //Avec une transaction
         public bool Save()
         {
-            //sauvegarde dans la table sale
-            request = "INSERT INTO sale (total, date_sale, sale_status) OUTPUT INSERTED.ID " +
-                "values (@total, @date_sale, @sale_status)";
-            command = new SqlCommand(request, DataBase.Connection);
-            command.Parameters.Add(new SqlParameter("@total", Total));
-            command.Parameters.Add(new SqlParameter("@date_sale", DateOrder));
-            command.Parameters.Add(new SqlParameter("@sale_status", Status));
+            SqlTransaction transaction = null;
             DataBase.Connection.Open();
-            id = (int)command.ExecuteScalar();
-            command.Dispose();
-            DataBase.Connection.Close();
-            bool paiement = false;
-            bool AllProductInserted = true;
-            if(id > 0)
+            //Démarrer une transaction sql
+            transaction = DataBase.Connection.BeginTransaction();
+            bool retour = false;
+            try
             {
-                //Ensuite sauvegarde dans la table sale_product
-                foreach(Product p in Products)
+                //sauvegarde dans la table sale
+                request = "INSERT INTO sale (total, date_sale, sale_status) OUTPUT INSERTED.ID " +
+                    "values (@total, @date_sale, @sale_status)";
+                command = new SqlCommand(request, DataBase.Connection, transaction);
+                command.Parameters.Add(new SqlParameter("@total", Total));
+                command.Parameters.Add(new SqlParameter("@date_sale", DateOrder));
+                command.Parameters.Add(new SqlParameter("@sale_status", Status));
+                id = (int)command.ExecuteScalar();
+
+
+                if (id > 0)
                 {
-                    if(!p.SaveProductOrder(id))
+                    //Ensuite sauvegarde dans la table sale_product
+                    foreach (Product p in Products)
                     {
-                        AllProductInserted = false;
-                        break;
+                        p.SaveProductOrder(id, transaction);
                     }
+                    //Sauvegarde du paiement
+                    Payment.Save(id, transaction);
                 }
-                //Sauvegarde du paiement
-                paiement = Payment.Save(id);
-
-                return paiement && AllProductInserted;
+                //valide la transaction
+                transaction.Commit();
+                retour = true;
             }
-
-            return false;
+            catch(Exception ex)
+            {
+                transaction.Rollback();  
+            }
+            DataBase.Connection.Close();
+            return retour;
         }
     }
 

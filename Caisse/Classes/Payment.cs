@@ -41,5 +41,20 @@ namespace Caisse.Classes
             DataBase.Connection.Close();
             return id > 0;
         }
+
+        public virtual bool Save(int orderId, SqlTransaction transaction)
+        {
+            //Sauvegarde dans la table paiement
+            request = "INSERT INTO payment (amount, order_id, payment_type, payment_date) " +
+                "OUTPUT INSERTED.id values " +
+                "(@amount, @order_id, @payment_type, @payment_date)";
+            command = new SqlCommand(request, DataBase.Connection, transaction);
+            command.Parameters.Add(new SqlParameter("@amount", Amount));
+            command.Parameters.Add(new SqlParameter("@order_id", orderId));
+            command.Parameters.Add(new SqlParameter("@payment_type", this.GetType()));
+            command.Parameters.Add(new SqlParameter("@payment_date", DatePayment));     
+            id = (int)command.ExecuteScalar();
+            return id > 0;
+        }
     }
 }
