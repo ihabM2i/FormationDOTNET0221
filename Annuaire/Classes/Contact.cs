@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Annuaire.Classes
 {
-    public class Contact
+    public class Contact : AbstractModelWithNotification
     {
         private int id;
         private string nom;
@@ -16,9 +16,9 @@ namespace Annuaire.Classes
         private static SqlCommand command;
         private static SqlDataReader reader;
         public int Id { get => id; set => id = value; }
-        public string Nom { get => nom; set => nom = value; }
-        public string Prenom { get => prenom; set => prenom = value; }
-        public string Telephone { get => telephone; set => telephone = value; }
+        public string Nom { get => nom; set { nom = value; RaisePropertyChange("Nom"); } }
+        public string Prenom { get => prenom; set { prenom = value; RaisePropertyChange("Prenom");} }
+        public string Telephone { get => telephone; set { telephone = value; RaisePropertyChange("Telephone"); } }
         public List<Email> Mails { get => mails; set => mails = value; }
 
         //public Contact(int id)

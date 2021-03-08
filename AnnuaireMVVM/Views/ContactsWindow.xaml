@@ -1,0 +1,41 @@
+﻿<Window x:Class="AnnuaireMVVM.Views.ContactsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnnuaireMVVM.Views"
+        mc:Ignorable="d"
+        Title="ContactsWindow" Height="450" Width="800">
+    <StackPanel Orientation="Horizontal">
+        <GroupBox Header="Formulaire Contact" MinWidth="400">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Nom : " MinWidth="80"></Label>
+                    <TextBox Text="{Binding Nom}" MinWidth="300"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Prénom : " MinWidth="80"></Label>
+                    <TextBox Text="{Binding Prenom}" MinWidth="300"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Téléphone : " MinWidth="80"></Label>
+                    <TextBox Text="{Binding Telephone}" MinWidth="300"></TextBox>
+                </StackPanel>
+                <Button Content="Confirmer" Command="{Binding ConfirmCommand}"></Button>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Liste contacts" MinWidth="400">
+            <StackPanel>
+                <ListView ItemsSource="{Binding Contacts}" SelectedItem="{Binding Contact}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Nom" Width="100" DisplayMemberBinding="{Binding Nom}"></GridViewColumn>
+                            <GridViewColumn Header="Prénom" Width="150" DisplayMemberBinding="{Binding Prenom}"></GridViewColumn>
+                            <GridViewColumn Header="Téléphone" Width="150" DisplayMemberBinding="{Binding Telephone}"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
+</Window>
