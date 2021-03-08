@@ -43,7 +43,7 @@ namespace SuiteCoursWPF.ViewModels
             }
         }
 
-        public Personne Personne { get => personne; }
+        public Personne Personne { get => personne; set { personne = value; RaiseAllChanged(); } }
 
         private ObservableCollection<Personne> personnes;
 
@@ -68,10 +68,32 @@ namespace SuiteCoursWPF.ViewModels
 
         private void ActionClickValidButton()
         {
-            Personnes.Add(personne);
-            personne = new Personne();
-            RaiseAllChanged();
-            MessageBox.Show("Validation");
+            //Si On ajoute une nouvelle personne, Id => 0
+            if(Personne.Id == 0)
+            {
+                if (personne.Save())
+                {
+                    Personnes.Add(personne);
+                    personne = new Personne();
+                    RaiseAllChanged();
+
+                }
+                else
+                {
+                    MessageBox.Show("Erreur insertion");
+                }
+            }
+            //Si Modification Id != 0
+            else
+            {
+                //Modification dans la base de données avec une méthode update par exemple
+                if (!personne.Update())
+                {
+                    MessageBox.Show("Erreur modification");
+                }
+            }
+            
+            
         }
 
         private void RaiseAllChanged()
