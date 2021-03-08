@@ -21,11 +21,23 @@
                     <Label Content="Téléphone : " MinWidth="80"></Label>
                     <TextBox Text="{Binding Telephone}" MinWidth="300"></TextBox>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Mail : " MinWidth="80"></Label>
+                    <TextBox Text="{Binding Mail}" MinWidth="200"></TextBox>
+                    <Button Content="Ajouter Mail" Command="{Binding MailCommand}" Width="100"></Button>
+                </StackPanel>
+                <ListBox ItemsSource="{Binding Emails}">
+                    
+                </ListBox>
                 <Button Content="Confirmer" Command="{Binding ConfirmCommand}"></Button>
             </StackPanel>
         </GroupBox>
         <GroupBox Header="Liste contacts" MinWidth="400">
             <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Text="{Binding Search}" MinWidth="300"></TextBox>
+                    <Button Command="{Binding SearchCommand}" MinWidth="100" Content="Rechercher"></Button>
+                </StackPanel>
                 <ListView ItemsSource="{Binding Contacts}" SelectedItem="{Binding Contact}">
                     <ListView.View>
                         <GridView>
