@@ -35,7 +35,11 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Supprimer" Command="{Binding DeleteCommand}"></Button>
+                </StackPanel>
             </StackPanel>
+            
         </GroupBox>
     </StackPanel>
 </Window>
