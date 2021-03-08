@@ -22,6 +22,9 @@
                 <StackPanel>
                     <TextBlock Text="{Binding Personne}"></TextBlock>
                 </StackPanel>
+                <StackPanel>
+                    <Button Content="Valider" Command="{Binding ValidCommand}" ></Button>
+                </StackPanel>
             </StackPanel>
         </GroupBox>
     </StackPanel>

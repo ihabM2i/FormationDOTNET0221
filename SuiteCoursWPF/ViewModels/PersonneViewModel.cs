@@ -1,9 +1,12 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using SuiteCoursWPF.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Windows;
+using System.Windows.Input;
 
 namespace SuiteCoursWPF.ViewModels
 {
@@ -41,9 +44,12 @@ namespace SuiteCoursWPF.ViewModels
 
         public Personne Personne { get => personne; }
 
+        public ICommand ValidCommand { get; set; }
+
         public PersonneViewModel()
         {
             personne = new Personne();
+            ValidCommand = new RelayCommand(ActionClickValidButton);
         }
 
         //private void RaisePropertyChange(string propertyName)
@@ -53,5 +59,11 @@ namespace SuiteCoursWPF.ViewModels
         //        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         //    }
         //}
+
+
+        private void ActionClickValidButton()
+        {
+            MessageBox.Show("Validation");
+        }
     }
 }
