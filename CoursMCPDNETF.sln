@@ -15,9 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestCours", "TestCours\Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bowling", "Bowling\Bowling.csproj", "{B602F2E6-3ED6-4A62-857A-EAFBF1215FCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoursAdoDotNet", "CoursAdoDotNetr\CoursAdoDotNet.csproj", "{2D335779-8E18-43FC-B6F1-431BEEE9DBE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoursAdoDotNet", "CoursAdoDotNetr\CoursAdoDotNet.csproj", "{2D335779-8E18-43FC-B6F1-431BEEE9DBE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Annuaire", "Annuaire\Annuaire.csproj", "{CEDE5855-327C-48FF-8A72-FC38661A2EED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Annuaire", "Annuaire\Annuaire.csproj", "{CEDE5855-327C-48FF-8A72-FC38661A2EED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuiteCoursWPF", "SuiteCoursWPF\SuiteCoursWPF.csproj", "{87108467-841A-4730-9039-866E9B7E4290}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{CEDE5855-327C-48FF-8A72-FC38661A2EED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEDE5855-327C-48FF-8A72-FC38661A2EED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEDE5855-327C-48FF-8A72-FC38661A2EED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87108467-841A-4730-9039-866E9B7E4290}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87108467-841A-4730-9039-866E9B7E4290}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87108467-841A-4730-9039-866E9B7E4290}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87108467-841A-4730-9039-866E9B7E4290}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

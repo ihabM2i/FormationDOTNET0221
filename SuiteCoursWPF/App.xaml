@@ -1,0 +1,9 @@
+﻿<Application x:Class="SuiteCoursWPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SuiteCoursWPF"
+             StartupUri="/Views/PersonneWindow.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>

@@ -1,0 +1,28 @@
+﻿<Window x:Class="SuiteCoursWPF.Views.PersonneWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SuiteCoursWPF.Views"
+        mc:Ignorable="d"
+        Title="PersonneWindow" Height="338" Width="562">
+    <StackPanel>
+        <GroupBox Header="Formulaire Personne">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Nom : "></Label>
+                    <TextBox Text="{Binding Nom}" MinWidth="400"></TextBox>
+                    <TextBlock Text="{Binding Nom}" MinWidth="100"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Prénom : "></Label>
+                    <TextBox Text="{Binding Prenom}"  MinWidth="400"></TextBox>
+                    <TextBlock Text="{Binding Prenom}" MinWidth="100"></TextBlock>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="{Binding Personne}"></TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
+</Window>
