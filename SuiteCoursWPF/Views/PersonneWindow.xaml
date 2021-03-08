@@ -27,5 +27,15 @@
                 </StackPanel>
             </StackPanel>
         </GroupBox>
+        <GroupBox Header="Liste des personnes">
+            <ListView ItemsSource="{Binding Personnes}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Nom" DisplayMemberBinding="{Binding Nom}" Width="280"></GridViewColumn>
+                        <GridViewColumn Header="Prenom" DisplayMemberBinding="{Binding Prenom}" Width="280"></GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
     </StackPanel>
 </Window>

@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using SuiteCoursWPF.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 using System.Windows;
@@ -44,11 +45,15 @@ namespace SuiteCoursWPF.ViewModels
 
         public Personne Personne { get => personne; }
 
+        private ObservableCollection<Personne> personnes;
+
         public ICommand ValidCommand { get; set; }
+        public ObservableCollection<Personne> Personnes { get => personnes; set => personnes = value; }
 
         public PersonneViewModel()
         {
             personne = new Personne();
+            Personnes = new ObservableCollection<Personne>() { new Personne { Nom = "tata", Prenom ="toto"} };
             ValidCommand = new RelayCommand(ActionClickValidButton);
         }
 
@@ -63,7 +68,17 @@ namespace SuiteCoursWPF.ViewModels
 
         private void ActionClickValidButton()
         {
+            Personnes.Add(personne);
+            personne = new Personne();
+            RaiseAllChanged();
             MessageBox.Show("Validation");
+        }
+
+        private void RaiseAllChanged()
+        {
+            RaisePropertyChanged("Personne");
+            RaisePropertyChanged("Nom");
+            RaisePropertyChanged("Prenom");
         }
     }
 }
