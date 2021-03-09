@@ -1,0 +1,30 @@
+﻿<Window x:Class="AnnuaireMVVM.Views.ContactWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnnuaireMVVM.Views"
+        mc:Ignorable="d"
+        Title="ContactWindow" Height="450" Width="800">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Nom : "></Label>
+            <Label Content="{Binding Nom}"></Label>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Prénom : "></Label>
+            <Label Content="{Binding Prenom}"></Label>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Téléphone : "></Label>
+            <Label Content="{Binding Telephone}"></Label>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Email : "></Label>
+            <ListBox ItemsSource="{Binding Emails}"></ListBox>
+        </StackPanel>
+        <StackPanel>
+            <Button Command="{Binding EditMainWindowCommand}" Content="Test Modification fenetre principale"></Button>
+        </StackPanel>
+    </StackPanel>
+</Window>

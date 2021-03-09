@@ -1,4 +1,5 @@
 ﻿using Annuaire.Classes;
+using AnnuaireMVVM.Views;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
@@ -14,14 +15,16 @@ namespace AnnuaireMVVM.ViewModels
     {
         private Contact contact;
 
-        public Contact Contact { get => contact; set { contact = value; if(value != null) RaiseAllChanged(); } }
+        private ContactsWindow _mainWindow;
 
+        private string message;
+        public Contact Contact { get => contact; set { contact = value; if(value != null) RaiseAllChanged(); } }
         public string Nom { get => Contact.Nom; set { Contact.Nom = value; RaisePropertyChanged(); } }
         public string Prenom { get => Contact.Prenom; set { Contact.Prenom = value; RaisePropertyChanged();} }
         public string Telephone { get => Contact.Telephone; set { Contact.Telephone = value; RaisePropertyChanged(); } }
         public string Search { get; set; }
-
         public string Mail { get; set; }
+        public string Message { get => message; set { message = value; RaisePropertyChanged(); } }
 
         public ObservableCollection<Email> Emails { get; set; }
 
@@ -33,17 +36,21 @@ namespace AnnuaireMVVM.ViewModels
 
         public ICommand MailCommand { get; set; }
 
+        public ICommand DetailCommand { get; set; }
+
         public ObservableCollection<Contact> Contacts { get; set; }
 
-        public ContactsViewModel()
+        public ContactsViewModel(ContactsWindow mainWindow)
         {
             Contact = new Contact();
             ConfirmCommand = new RelayCommand(ActionConfirmCommand);
             DeleteCommand = new RelayCommand(ActionDeleteCommand);
             SearchCommand = new RelayCommand(ActionSearchCommand);
             MailCommand = new RelayCommand(ActionMailCommand);
+            DetailCommand = new RelayCommand(ActionDetailCommand);
             Contacts = new ObservableCollection<Contact>(Contact.GetContacts());
             Emails = new ObservableCollection<Email>();
+            _mainWindow = mainWindow;
         }
 
         public void ActionConfirmCommand()
@@ -97,6 +104,19 @@ namespace AnnuaireMVVM.ViewModels
                 Emails.Add(e);
                 Mail = "";
                 RaisePropertyChanged("Mail");
+            }
+        }
+
+        private void ActionDetailCommand()
+        {
+            if(Contact != null && Contact.Id > 0)
+            {
+                ContactWindow contactWindow = new ContactWindow(Contact, _mainWindow);
+                contactWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("Aucun contact selectionné");
             }
         }
 

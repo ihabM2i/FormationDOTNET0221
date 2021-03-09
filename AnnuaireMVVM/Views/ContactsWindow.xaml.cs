@@ -21,7 +21,7 @@ namespace AnnuaireMVVM.Views
         public ContactsWindow()
         {
             InitializeComponent();
-            DataContext = new ContactsViewModel();
+            DataContext = new ContactsViewModel(this);
         }
     }
 }

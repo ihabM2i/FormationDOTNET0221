@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AnnuaireMVVM.Views"
         mc:Ignorable="d"
-        Title="ContactsWindow" Height="450" Width="800">
+        Title="ContactsWindow" Height="450" Width="820">
     <StackPanel Orientation="Horizontal">
         <GroupBox Header="Formulaire Contact" MinWidth="400">
             <StackPanel>
@@ -30,6 +30,7 @@
                     
                 </ListBox>
                 <Button Content="Confirmer" Command="{Binding ConfirmCommand}"></Button>
+                <TextBlock Text="{Binding Message}"></TextBlock>
             </StackPanel>
         </GroupBox>
         <GroupBox Header="Liste contacts" MinWidth="400">
@@ -49,6 +50,7 @@
                 </ListView>
                 <StackPanel Orientation="Horizontal">
                     <Button Content="Supprimer" Command="{Binding DeleteCommand}"></Button>
+                    <Button Content="Detail" Command="{Binding DetailCommand}"></Button>
                 </StackPanel>
             </StackPanel>
             
