@@ -1,3 +1,26 @@
-﻿
-<h1>Liste contacts</h1>
+﻿@using Annuaire.Classes;
+
+<div class="container">
+    <h1>Liste contacts</h1>
+    <div class="row">
+        <div class="col">Nom </div>
+        <div class="col">Prénom </div>
+        <div class="col">Téléphone </div>
+    </div>
+    @*@foreach (Contact c in (ViewData["contacts"] as List<Contact>))*@
+    @foreach (Contact c in ViewBag.Contacts)
+    {
+        <div class="row">
+            <div class="col">
+                @c.Nom
+            </div>
+            <div class="col">
+                @c.Prenom
+            </div>
+            <div class="col">
+                @c.Telephone
+            </div>
+        </div>
+    }
+</div>
 
