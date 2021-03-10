@@ -31,13 +31,17 @@
                 </ListBox>
                 <Button Content="Confirmer" Command="{Binding ConfirmCommand}"></Button>
                 <TextBlock Text="{Binding Message}"></TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton IsChecked="{Binding IsFirst, Mode=OneWay}" Content="first"></RadioButton>
+                    <RadioButton IsChecked="{Binding IsSecond, Mode=OneWay}" Content="second"></RadioButton>
+                </StackPanel>
             </StackPanel>
         </GroupBox>
         <GroupBox Header="Liste contacts" MinWidth="400">
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBox Text="{Binding Search}" MinWidth="300"></TextBox>
-                    <Button Command="{Binding SearchCommand}" MinWidth="100" Content="Rechercher"></Button>
+                    <RichTextBox x:Name="richTextBox" MinWidth="300"></RichTextBox>
+                    <Button Command="{Binding SearchCommand}" CommandParameter="{Binding ElementName=richTextBox}" MinWidth="100" Content="Rechercher"></Button>
                 </StackPanel>
                 <ListView ItemsSource="{Binding Contacts}" SelectedItem="{Binding Contact}">
                     <ListView.View>

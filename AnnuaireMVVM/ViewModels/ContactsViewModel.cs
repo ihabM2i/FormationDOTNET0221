@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace AnnuaireMVVM.ViewModels
@@ -26,6 +27,9 @@ namespace AnnuaireMVVM.ViewModels
         public string Mail { get; set; }
         public string Message { get => message; set { message = value; RaisePropertyChanged(); } }
 
+        public bool IsFirst { get { return Contact.Nom != null ? Contact.Nom.Contains('a') : false; } }
+        public bool IsSecond { get { return Contact.Nom != null ? Contact.Nom.Contains('t') : false; } }
+        
         public ObservableCollection<Email> Emails { get; set; }
 
         public ICommand ConfirmCommand { get; set; }
@@ -45,7 +49,7 @@ namespace AnnuaireMVVM.ViewModels
             Contact = new Contact();
             ConfirmCommand = new RelayCommand(ActionConfirmCommand);
             DeleteCommand = new RelayCommand(ActionDeleteCommand);
-            SearchCommand = new RelayCommand(ActionSearchCommand);
+            SearchCommand = new RelayCommand<RichTextBox>(ActionSearchCommand);
             MailCommand = new RelayCommand(ActionMailCommand);
             DetailCommand = new RelayCommand(ActionDetailCommand);
             Contacts = new ObservableCollection<Contact>(Contact.GetContacts());
@@ -89,9 +93,10 @@ namespace AnnuaireMVVM.ViewModels
             }
         }
 
-        private void ActionSearchCommand()
+        private void ActionSearchCommand(RichTextBox richTextBox)
         {
-            Contacts = new ObservableCollection<Contact>(Contact.SearchContacts(Search));
+            DateTime date = Convert.ToDateTime("2020-01-01");
+            Contacts = new ObservableCollection<Contact>(Contact.SearchContacts(richTextBox.Document.Blocks.ToString()));
             RaisePropertyChanged("Contacts");
         }
 
@@ -126,6 +131,8 @@ namespace AnnuaireMVVM.ViewModels
             RaisePropertyChanged("Prenom");
             RaisePropertyChanged("Telephone");
             RaisePropertyChanged("Emails");
+            RaisePropertyChanged("IsFirst");
+            RaisePropertyChanged("IsSecond");
         }
     }
 }

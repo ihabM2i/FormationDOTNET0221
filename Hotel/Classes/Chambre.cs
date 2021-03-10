@@ -42,7 +42,7 @@ namespace Hotel.Classes
         }
 
         public override string ToString()
-        {
+        {            
             return $"Numero {Numero}, Tarif : {Tarif}, Statut : {Statut}";
         }
     }

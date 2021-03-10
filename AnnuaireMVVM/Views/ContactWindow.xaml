@@ -26,5 +26,6 @@
         <StackPanel>
             <Button Command="{Binding EditMainWindowCommand}" Content="Test Modification fenetre principale"></Button>
         </StackPanel>
+        <DatePicker SelectedDate="{Binding MaDate}"/>
     </StackPanel>
 </Window>

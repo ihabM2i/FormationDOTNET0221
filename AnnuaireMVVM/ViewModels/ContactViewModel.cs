@@ -16,6 +16,8 @@ namespace AnnuaireMVVM.ViewModels
         public string Nom { get => _contact.Nom; }
         public string Prenom { get => _contact.Prenom; }
         public string Telephone { get => _contact.Telephone; }
+
+        public DateTime MaDate { get; set; }
         public List<Email> Emails { get => Email.GetMails(_contact.Id); }
 
         public ICommand EditMainWindowCommand { get; set; }
@@ -23,6 +25,7 @@ namespace AnnuaireMVVM.ViewModels
         {
             _contact = contact;
             EditMainWindowCommand = new RelayCommand(ActionEditMainWindow);
+            MaDate = DateTime.Now;
         }
 
         public ContactViewModel(Contact contact, ContactsWindow mainWindow) : this(contact)
