@@ -1,17 +1,30 @@
-﻿
-@{ 
+﻿@model coursAspNetMVC.ViewModels.PersonneAdresseViewModel
+@{
     ViewData["Title"] = "Liste personnes";
 }
 <h1>Personnes</h1>
 @*@foreach(Personne p in (ViewData["listesPersonnes"] as List<Personne>))*@
-@foreach(Personne p in ViewBag.ListePersonnes)
+@*@foreach(Personne p in ViewBag.ListePersonnes)*@
+@foreach (Personne p in Model.Personnes)
 {
-<div class="row">
-    <div class="col">
-        @p.Nom
+    <div class="row">
+        <div class="col">
+            @p.Nom
+        </div>
+        <div class="col">
+            @p.Prenom
+        </div>
     </div>
-    <div class="col">
-        @p.Prenom
+}
+<h2>Adresse</h2>
+@foreach (Adresse a in Model.Adresses)
+{
+    <div class="row">
+        <div class="col">
+            @a.Rue
+        </div>
+        <div class="col">
+            @a.Ville
+        </div>
     </div>
-</div>
 }

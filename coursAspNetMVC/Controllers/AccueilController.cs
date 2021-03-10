@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using coursAspNetMVC.Models;
+using coursAspNetMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace coursAspNetMVC.Controllers
@@ -33,13 +34,19 @@ namespace coursAspNetMVC.Controllers
         public IActionResult Personnes()
         {
             List<Personne> liste = Personne.GetPersonnes();
+            List<Adresse> listeAdresses = Adresse.GetAdresses();
             //L'uitilisation du ViewData pour passer les données du controller vers la view
             //ViewData["listesPersonnes"] = liste;
             //L'uitilisation du ViewBag pour passer les données du controller vers la view
 
             //ViewBag => objet dynamic
-            ViewBag.ListePersonnes = liste;
-            return View();
+            //ViewBag.ListePersonnes = liste;
+
+            //Un objet => à la vue, un model de vue != model MVC
+            PersonneAdresseViewModel vModel = new PersonneAdresseViewModel();
+            vModel.Adresses = listeAdresses;
+            vModel.Personnes = liste;
+            return View(vModel);
         }
     }
 }
