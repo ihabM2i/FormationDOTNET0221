@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using coursAspNetMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace coursAspNetMVC.Controllers
@@ -27,6 +28,18 @@ namespace coursAspNetMVC.Controllers
             //return View("Index");
             //Return view Index => dans le dossier Accueil => Views, ~=> racine projet
             return View("~/Views/Accueil/Index.cshtml");
+        }
+
+        public IActionResult Personnes()
+        {
+            List<Personne> liste = Personne.GetPersonnes();
+            //L'uitilisation du ViewData pour passer les données du controller vers la view
+            //ViewData["listesPersonnes"] = liste;
+            //L'uitilisation du ViewBag pour passer les données du controller vers la view
+
+            //ViewBag => objet dynamic
+            ViewBag.ListePersonnes = liste;
+            return View();
         }
     }
 }

@@ -1,0 +1,16 @@
+﻿@{ 
+    ViewData["Title"] = "Liste personnes";
+}
+<h1>Personnes</h1>
+@*@foreach(Personne p in (ViewData["listesPersonnes"] as List<Personne>))*@
+@foreach(Personne p in ViewBag.ListePersonnes)
+{
+<div class="row">
+    <div class="col">
+        @p.Nom
+    </div>
+    <div class="col">
+        @p.Prenom
+    </div>
+</div>
+}
