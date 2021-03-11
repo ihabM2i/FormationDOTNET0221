@@ -1,0 +1,35 @@
+﻿@model Contact
+@{
+    ViewData["Title"] = "DetailContact";
+}
+    <div class="container">
+        @if (Model != null)
+        {
+            <h1>Detail Contact Id : @Model.Id</h1>
+            <div class="row m-1">
+                <div class="col">
+                    Nom : @Model.Nom
+                </div>
+            </div>
+            <div class="row m-1">
+                <div class="col">
+                    Prénom : @Model.Prenom
+                </div>
+            </div>
+            <div class="row m-1">
+                <div class="col">
+                    Téléphone : @Model.Telephone
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col alert-danger p-1">
+                    Aucun contact avec cet id
+                </div>
+            </div>
+        }
+    </div>
+
+
