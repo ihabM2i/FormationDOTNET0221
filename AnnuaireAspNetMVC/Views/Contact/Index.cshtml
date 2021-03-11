@@ -28,6 +28,9 @@
             <div class="col">
                 @c.Telephone
             </div>
+            <div>
+                <a asp-action="DetailContact" asp-controller="Contact" asp-route-id="@c.Id">Detail</a>
+            </div>
         </div>
     }
 </div>

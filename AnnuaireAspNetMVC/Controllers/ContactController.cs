@@ -48,5 +48,11 @@ namespace AnnuaireAspNetMVC.Controllers
                 return View("FormContact");
             }
         }
+
+        public IActionResult DetailContact(int id)
+        {
+            Contact contact = Contact.GetContactById(id);
+            return View(contact);
+        }
     }
 }
