@@ -1,4 +1,24 @@
 ﻿<h1>Ajouter un contact</h1>
-<form>
 
+<form asp-action="SubmitFormContact" asp-controller="Contact" method="post" class="container">
+    @if (ViewBag.MessageError != null)
+    {
+        <div class="row m-1">
+            <div class="alert-danger col p-1">
+                @ViewBag.MessageError
+            </div>
+        </div>
+    }
+    <div class="row m-1">
+        <input type="text" name="nom" placeholder="Nom du contact" class="form-control col p-1" />
+    </div>
+    <div class="row m-1">
+        <input type="text" name="prenom" placeholder="Prénom du contact" class="form-control col p-1" />
+    </div>
+    <div class="row m-1">
+        <input type="text" name="telephone" placeholder="Téléphone du contact" class="form-control col p-1" />
+    </div>
+    <div class="row m-1">
+        <button class="col btn btn-secondary p-1">Valider</button>
+    </div>
 </form>

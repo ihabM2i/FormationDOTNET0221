@@ -2,6 +2,14 @@
 
 <div class="container">
     <h1>Liste contacts</h1>
+    @if(ViewBag.Message != null)
+    {
+        <div class="row m-1">
+            <div class="col alert-success p-1">
+                @ViewBag.Message
+            </div>
+        </div>
+    }
     <div class="row">
         <div class="col">Nom </div>
         <div class="col">Prénom </div>
