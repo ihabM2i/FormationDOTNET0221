@@ -54,5 +54,11 @@ namespace AnnuaireAspNetMVC.Controllers
             Contact contact = Contact.GetContactById(id);
             return View(contact);
         }
+
+        public IActionResult Search(string search)
+        {
+            ViewBag.Contacts = Contact.SearchContacts(search);            
+            return View("Index");
+        }
     }
 }
