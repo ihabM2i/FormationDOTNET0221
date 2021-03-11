@@ -12,7 +12,7 @@ namespace AnnuaireAspNetMVC.Controllers
         public IActionResult Index(string message)
         {
             //ViewData["contacts"] = Contact.GetContacts();
-            ViewBag.Contacts= Contact.GetContacts();
+            ViewBag.Contacts = Contact.GetContacts();
             ViewBag.Message = message;
             return View();
         }
@@ -22,19 +22,41 @@ namespace AnnuaireAspNetMVC.Controllers
             return View();
         }
 
-        public IActionResult SubmitFormContact(string nom, string prenom, string telephone)
+        //public IActionResult SubmitFormContact(string nom, string prenom, string telephone)
+        //{
+        //    if(nom != null && prenom != null && telephone != null)
+        //    {
+        //        Contact contact = new Contact()
+        //        {
+        //            Nom = nom,
+        //            Prenom = prenom,
+        //            Telephone = telephone
+        //        };
+        //        if(contact.Save())
+        //        {
+        //            return RedirectToAction("Index", "Contact", new { message = "Contact ajouté"});
+        //        }
+        //        else
+        //        {
+        //            ViewBag.MessageError = "Erreur d'insertion dans la base de données";
+        //            return View("FormContact");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        ViewBag.MessageError = "Merci de remplir la totalité des champs";
+        //        return View("FormContact");
+        //    }
+        //}
+
+        [HttpPost]
+        public IActionResult SubmitFormContact([Bind("Nom, Prenom, Telephone")] Contact contact)
         {
-            if(nom != null && prenom != null && telephone != null)
+            if (contact != null && contact.Nom != null && contact.Prenom != null && contact.Telephone!= null)
             {
-                Contact contact = new Contact()
+                if (contact.Save())
                 {
-                    Nom = nom,
-                    Prenom = prenom,
-                    Telephone = telephone
-                };
-                if(contact.Save())
-                {
-                    return RedirectToAction("Index", "Contact", new { message = "Contact ajouté"});
+                    return RedirectToAction("Index", "Contact", new { message = "Contact ajouté" });
                 }
                 else
                 {
@@ -48,7 +70,6 @@ namespace AnnuaireAspNetMVC.Controllers
                 return View("FormContact");
             }
         }
-
         public IActionResult DetailContact(int id)
         {
             Contact contact = Contact.GetContactById(id);
