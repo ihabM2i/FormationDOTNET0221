@@ -32,7 +32,7 @@ namespace coursAspNetMVC.Controllers
         }
 
         public IActionResult Personnes()
-        {
+        {           
             List<Personne> liste = Personne.GetPersonnes();
             List<Adresse> listeAdresses = Adresse.GetAdresses();
             //L'uitilisation du ViewData pour passer les données du controller vers la view
@@ -47,6 +47,28 @@ namespace coursAspNetMVC.Controllers
             vModel.Adresses = listeAdresses;
             vModel.Personnes = liste;
             return View(vModel);
+        }
+
+        public IActionResult DetailPersonne(string nom, int id)
+        {
+            ViewBag.Nom = nom;
+            ViewBag.Id = id;
+            return View();
+        }
+
+        public IActionResult FormPersonne()
+        {
+            return View();
+        }
+
+        public IActionResult SubmitFormPersonne(string nom, string prenom)
+        {
+            Personne p = new Personne() { Nom = nom, Prenom = prenom };
+            //Ajouter dans une base de données avec la méthode save apr exemple 
+            //Si je n'ai pas d'erreurs
+            // redirection vers l'action Personnes du même controller, si vers un autre controller
+            //return RedirectToAction("Personnes");
+            return RedirectToAction("NomAction", "NomDuController");
         }
     }
 }

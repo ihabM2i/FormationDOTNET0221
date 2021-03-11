@@ -1,4 +1,5 @@
-﻿@model coursAspNetMVC.ViewModels.PersonneAdresseViewModel
+﻿@*@model List<Personne>*@
+@model coursAspNetMVC.ViewModels.PersonneAdresseViewModel
 @{
     ViewData["Title"] = "Liste personnes";
 }
@@ -13,6 +14,9 @@
         </div>
         <div class="col">
             @p.Prenom
+        </div>
+        <div class="col">
+            <a asp-controller="Accueil" asp-action="DetailPersonne" asp-route-id="1" asp-route-nom="@p.Nom">Detail</a>
         </div>
     </div>
 }
