@@ -60,5 +60,18 @@ namespace AnnuaireAspNetMVC.Controllers
             ViewBag.Contacts = Contact.SearchContacts(search);            
             return View("Index");
         }
+
+        public IActionResult DeleteContact(int id)
+        {
+            Contact contact = Contact.GetContactById(id);
+            if(contact != null && contact.Delete())
+            {
+                return RedirectToAction("Index", "Contact", new { message = "Contact supprimé" });
+            }
+            else
+            {
+                return RedirectToAction("Index", "Contact");
+            }
+        }
     }
 }

@@ -21,6 +21,11 @@
                     Téléphone : @Model.Telephone
                 </div>
             </div>
+            <div class="row m-1">
+                <div class="col">
+                    <a asp-action="DeleteContact" asp-controller="Contact" asp-route-id="@Model.Id" class="btn btn-danger">Supprimer</a>
+                </div>
+            </div>
         }
         else
         {
