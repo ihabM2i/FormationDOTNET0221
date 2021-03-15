@@ -1,0 +1,45 @@
+﻿@model Compte
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Accueil</h1>
+<div class="container">
+    @if (ViewBag.Message != null)
+    {
+        <div class="row m-1">
+            <div class="col alert alert-success p-1">
+                @ViewBag.Message
+            </div>
+        </div>
+    }
+    <form class="row m-1" asp-action="Index" asp-controller="Compte">
+        <input type="text" placeholder="Rechercher un compte" name="numero" class="col-8 form-control p-1" />
+        <button class="btn btn-secondary col-4 p-1">Rechercher</button>
+    </form>
+    @if (Model != null)
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Téléphone</th>
+                    <th scope="col">Solde</th>
+                    <th scope="col">#</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">@Model.Client.Nom</th>
+                    <td>@Model.Client.Prenom</td>
+                    <td>@Model.Client.Telephone</td>
+                    <td>@Model.Solde</td>
+                    <td><a asp-action="DetailCompte" asp-controller="Compte" asp-route-id="@Model.Numero">Detail</a></td>
+                </tr>
+                
+            </tbody>
+        </table>
+    }
+</div>
+

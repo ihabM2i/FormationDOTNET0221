@@ -41,6 +41,7 @@
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <RichTextBox x:Name="richTextBox" MinWidth="300"></RichTextBox>
+                    <!--<TextBox Width="300" Text="{Binding Search}" />-->
                     <Button Command="{Binding SearchCommand}" CommandParameter="{Binding ElementName=richTextBox}" MinWidth="100" Content="Rechercher"></Button>
                 </StackPanel>
                 <ListView ItemsSource="{Binding Contacts}" SelectedItem="{Binding Contact}">

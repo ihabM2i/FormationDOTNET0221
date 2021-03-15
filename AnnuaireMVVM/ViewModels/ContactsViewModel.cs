@@ -95,7 +95,7 @@ namespace AnnuaireMVVM.ViewModels
 
         private void ActionSearchCommand(RichTextBox richTextBox)
         {
-            DateTime date = Convert.ToDateTime("2020-01-01");
+            //DateTime date = Convert.ToDateTime("2020-01-01");
             Contacts = new ObservableCollection<Contact>(Contact.SearchContacts(richTextBox.Document.Blocks.ToString()));
             RaisePropertyChanged("Contacts");
         }

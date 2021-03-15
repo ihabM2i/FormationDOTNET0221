@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "FormOperation";
+}
+
+<h1>Opération @ViewBag.Type, compte : @ViewBag.Numero</h1>
+<form asp-action="SubmitOperation" asp-controller="Compte" class="container">
+    <input type="hidden" name="type" value="@ViewBag.Type" />
+    <input type="hidden" name="numero" value="@ViewBag.Numero" />
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="row m-1">
+            <div class="col alert alert-danger p-1">
+                @ViewBag.ErrorMessage
+            </div>
+        </div>
+    }
+    <div class="row m-1">
+        <input type="text" name="montant" placeholder="Montant de l'opération" class="col form-control p-1" />
+    </div>
+    <div class="row m-1">
+        <button class="col btn btn-secondary" type="submit">Valider</button>
+    </div>
+</form>
+

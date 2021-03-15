@@ -1,0 +1,62 @@
+﻿@model Compte
+@{
+    ViewData["Title"] = "DetailCompte";
+}
+@if (Model == null)
+{
+    <div class="alert alert-danger">
+        Aucun compte avec ce numéro
+    </div>
+}
+else
+{
+    <h1>Détail Compte N° @Model.Numero</h1>
+    <div class="container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Téléphone</th>
+                    <th scope="col">Solde</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">@Model.Client.Nom</th>
+                    <td>@Model.Client.Prenom</td>
+                    <td>@Model.Client.Telephone</td>
+                    <td>@Model.Solde</td>
+                </tr>
+
+            </tbody>
+        </table>
+        <div class="row m-1">
+            <h2 class="col">Liste des opérations</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Date opération</th>
+                        <th scope="col">Montant</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(Operation o in Model.Operations)
+                    {
+                    <tr>
+                        <th scope="row">@o.DateOperation</th>
+                        <td class="@(o.Montant < 0 ? "text-danger" : "text-success")">@o.Montant</td>                        
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="row m-1">
+            <a class="col btn btn-success" asp-action="FormOperation" asp-route-id="@Model.Numero" asp-route-type="depot" asp-controller="Compte">Effectuer un dépôt</a>
+            <a class="col btn btn-danger" asp-action="FormOperation" asp-route-id="@Model.Numero" asp-route-type="retrait" asp-controller="Compte">Effectuer un retrait</a>
+        </div>
+    </div>
+}
+
+

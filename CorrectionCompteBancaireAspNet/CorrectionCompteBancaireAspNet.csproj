@@ -4,6 +4,11 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="DAOBanque">
+      <HintPath>..\..\CoursAP2019\DAOBanque\bin\Debug\netcoreapp3.0\DAOBanque.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
@@ -13,18 +18,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <ProjectReference Include="..\Annuaire\Annuaire.csproj" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Reference Include="DAOBanque">
-      <HintPath>..\..\CoursAP2019\DAOBanque\bin\Debug\netcoreapp3.0\DAOBanque.dll</HintPath>
-    </Reference>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
 </Project>

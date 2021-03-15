@@ -23,9 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuiteCoursWPF", "SuiteCours
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnnuaireMVVM", "AnnuaireMVVM\AnnuaireMVVM.csproj", "{23075F39-750C-4953-AA08-2B456E5E3D66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "coursAspNetMVC", "coursAspNetMVC\coursAspNetMVC.csproj", "{F6539A55-B3D3-42D3-8390-CB19839E53AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "coursAspNetMVC", "coursAspNetMVC\coursAspNetMVC.csproj", "{F6539A55-B3D3-42D3-8390-CB19839E53AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnnuaireAspNetMVC", "AnnuaireAspNetMVC\AnnuaireAspNetMVC.csproj", "{07C8603E-A74A-41C3-A6AD-850661E0C7FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnnuaireAspNetMVC", "AnnuaireAspNetMVC\AnnuaireAspNetMVC.csproj", "{07C8603E-A74A-41C3-A6AD-850661E0C7FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CorrectionCompteBancaireAspNet", "CorrectionCompteBancaireAspNet\CorrectionCompteBancaireAspNet.csproj", "{235CE5D7-1EFE-415D-BAF8-CEEA03E4E4CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{07C8603E-A74A-41C3-A6AD-850661E0C7FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07C8603E-A74A-41C3-A6AD-850661E0C7FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07C8603E-A74A-41C3-A6AD-850661E0C7FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{235CE5D7-1EFE-415D-BAF8-CEEA03E4E4CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{235CE5D7-1EFE-415D-BAF8-CEEA03E4E4CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{235CE5D7-1EFE-415D-BAF8-CEEA03E4E4CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{235CE5D7-1EFE-415D-BAF8-CEEA03E4E4CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

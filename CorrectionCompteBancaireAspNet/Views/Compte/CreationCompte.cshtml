@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewData["Title"] = "CreationCompte";
+}
+
+<h1>Création de compte bancaire</h1>
+<form asp-action="SubmitCreationCompte" asp-controller="Compte" method="post" class="container">
+    @if(ViewBag.MessageError != null)
+    {
+        <div class="row m-1">
+            <div class="alert alert-danger col p-1">
+                @ViewBag.MessageError
+            </div>
+        </div>
+    }
+    <div class="row m-1">
+        <input type="text" name="Nom" placeholder="Nom du client" class="col form-control p-1" />
+    </div>
+    <div class="row m-1">
+        <input type="text" name="Prenom" placeholder="Prénom du client" class="col form-control p-1" />
+    </div>
+    <div class="row m-1">
+        <input type="text" name="Telephone" placeholder="Téléphone du client" class="col form-control p-1" />
+    </div>
+    <div class="row m-1">
+        <input type="text" name="Solde" placeholder="Solde initial du compte" class="col form-control p-1" />
+    </div>
+    <div class="row m-1">
+        <button type="submit" class="col btn btn-secondary p-1">Valider</button>
+    </div>
+</form>
+
