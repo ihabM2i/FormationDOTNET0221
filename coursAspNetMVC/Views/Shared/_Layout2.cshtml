@@ -27,6 +27,9 @@
         </nav>
     </header>
     <main class="container">
+        <aside>
+            @await Component.InvokeAsync("MenuComponent")
+        </aside>
         @*Methode pour afficher le body des views*@
         @RenderBody()
     </main>

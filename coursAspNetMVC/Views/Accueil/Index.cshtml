@@ -1,5 +1,9 @@
-﻿@{ 
+﻿@{
     string nom = "abadi";
 }
 <h1>First Accueil Action @nom</h1>
+@*Invoke menu component => Affiche et execution du menu component*@
+@*Affichage d'une liste à partir d'une base de données*@
+
+@await Component.InvokeAsync("MenuComponent")
 

@@ -30,6 +30,9 @@
         </nav>
     </header>
     <div class="container">
+        <aside>
+            @await Component.InvokeAsync("MenuComponent")
+        </aside>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
