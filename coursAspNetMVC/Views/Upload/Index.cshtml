@@ -4,12 +4,12 @@
 }
 
 <h1>Formulaire upload</h1>
-<form class="container" asp-controller="Upload" asp-action="SubmitUpload" enctype="multipart/form-data">
+<form class="container" asp-controller="Upload" asp-action="SubmitMultiUpload" enctype="multipart/form-data">
     <div class="row m-1">
         <input type="text" name="nom" placeholder="Nom : " class="form-control col p-1" />
     </div>
     <div class="row m-1">
-        <input type="file" name="avatar" class="form-control col p-1" />
+        <input type="file" multiple name="avatar" class="form-control col p-1" />
     </div>
     <div class="row m-1">
         <button class="btn btn-outline-secondary col">Valider</button>
