@@ -22,6 +22,10 @@ namespace coursAspNetMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession((options) =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(5);
+            });
             services.AddControllersWithViews();
         }
 
@@ -41,6 +45,8 @@ namespace coursAspNetMVC
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

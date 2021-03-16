@@ -1,0 +1,16 @@
+﻿@model List<String>
+@{
+    ViewData["Title"] = "ReadSession";
+}
+
+<h1>ReadSession</h1>
+@ViewBag.Nom
+
+<div>
+    <h1>Liste</h1>
+    @foreach(string s in Model)
+    {
+        <div>@s</div>
+    }
+</div>
+
