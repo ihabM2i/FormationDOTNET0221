@@ -1,0 +1,29 @@
+﻿@model List<Avatar>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Formulaire upload</h1>
+<form class="container" asp-controller="Upload" asp-action="SubmitUpload" enctype="multipart/form-data">
+    <div class="row m-1">
+        <input type="text" name="nom" placeholder="Nom : " class="form-control col p-1" />
+    </div>
+    <div class="row m-1">
+        <input type="file" name="avatar" class="form-control col p-1" />
+    </div>
+    <div class="row m-1">
+        <button class="btn btn-outline-secondary col">Valider</button>
+    </div>
+</form>
+
+<div class="container">
+     <div class="row">
+         @foreach(Avatar a in Model)
+         {
+             <div class="col-3">
+                 <img src="~/@a.Chemin" />
+             </div>
+         }
+     </div>
+</div>
+

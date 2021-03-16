@@ -23,4 +23,9 @@
     <ProjectReference Include="..\CoursAdoDotNetr\CoursAdoDotNet.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\avatar\" />
+  </ItemGroup>
+
 </Project>
