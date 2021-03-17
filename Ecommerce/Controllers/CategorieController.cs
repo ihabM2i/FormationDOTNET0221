@@ -9,9 +9,10 @@ namespace Ecommerce.Controllers
 {
     public class CategorieController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(int? id)
         {
-            return View();
+            List<Produit> produits = Produit.GetProduitsByCategories(id == null ? 0 : (int)id);
+            return View(produits);
         }
 
         //Formulaire pour ajouter une catégorie

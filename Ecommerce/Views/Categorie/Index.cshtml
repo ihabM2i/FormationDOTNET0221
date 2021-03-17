@@ -1,7 +1,30 @@
-﻿
+﻿@model List<Produit>
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<section class="col-10 produits p-1">
+    <div class="row">
+        @foreach(Produit p in Model)
+        {
+        <div class="produit col-3">
+            <div class="row">
+                <div class="col">
+                    <img src="~/@p.Images[0].Url" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    @p.Titre
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    @p.Prix €
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</section>
 

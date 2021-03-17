@@ -42,6 +42,43 @@ namespace Ecommerce.Models
             command.Dispose();
             connection.Close();
             return Id > 0;
-        }        
+        }
+        
+        public static List<Produit> GetProduitsByCategories(int categoryId)
+        {
+            //Récupérer les produits
+            List<Produit> liste = new List<Produit>();
+            request = "SELECT id,prix, titre FROM produit ";
+            if(categoryId > 0)
+            {
+                request += "where categorie_id = @category_id";
+            }
+            connection = Connection.New;
+            command = new SqlCommand(request, connection);
+            if(categoryId > 0)
+            {
+                command.Parameters.Add(new SqlParameter("@category_id", categoryId));
+            }
+            connection.Open();
+            reader = command.ExecuteReader();
+            while(reader.Read())
+            {
+                Produit p = new Produit()
+                {
+                    Id = reader.GetInt32(0),
+                    Prix = reader.GetDecimal(1),
+                    Titre = reader.GetString(2),
+                };
+                liste.Add(p);
+            }
+            reader.Close();
+            command.Dispose();
+            connection.Close();
+            liste.ForEach(p =>
+            {
+                p.Images = Image.GetImages(p.Id);
+            });
+            return liste;
+        }
     }
 }
