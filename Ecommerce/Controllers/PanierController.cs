@@ -39,6 +39,29 @@ namespace Ecommerce.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult ValiderPanier()
+        {
+            if(HttpContext.Request.Cookies["login"] == "true")
+            {
+                //Validation du panier
+                Panier panier = GetPanierFromSession();
+                int utilisateurId = Convert.ToInt32(HttpContext.Request.Cookies["userId"]);
+                if(panier.Save(utilisateurId))
+                {
+                    HttpContext.Session.Clear();
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Utilisateur");
+            }
+        }
+
         private Panier GetPanierFromSession()
         {
             Panier panier;

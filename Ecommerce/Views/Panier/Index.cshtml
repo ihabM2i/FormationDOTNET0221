@@ -3,36 +3,39 @@
     ViewData["Title"] = "Panier";
 }
 
-<div class="col-10 p-1">
-    <h1 class="row m-1">
-        <span class="col">Votre panier</span>
-        <span class="col-4">Total : @Model.Total €</span>
-    </h1>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">Image</th>
-                <th scope="col">Titre</th>
-                <th scope="col">Prix UT</th>
-                <th scope="col">Qty</th>
-                <th scope="col">Total Produit</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (ProduitPanier p in Model.Produits)
-            {
-            <tr>
-                <th scope="row"><img class="imagePanier" src="~/@p.Produit.Images[0].Url" /></th>
-                <td>@p.Produit.Titre</td>
-                <td>@p.Produit.Prix</td>
-                <td>@p.Qty</td>
-                <td>@(p.Qty * p.Produit.Prix)</td>
-            </tr>
-            }
+    <div class="col-10 p-1">
+        <h1 class="row m-1">
+            <span class="col">Votre panier</span>
+            <span class="col-4">Total : @Model.Total €</span>
+        </h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Image</th>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Prix UT</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">Total Produit</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ProduitPanier p in Model.Produits)
+                {
+                    <tr>
+                        <th scope="row"><img class="imagePanier" src="~/@p.Produit.Images[0].Url" /></th>
+                        <td>@p.Produit.Titre</td>
+                        <td>@p.Produit.Prix</td>
+                        <td>@p.Qty</td>
+                        <td>@(p.Qty * p.Produit.Prix)</td>
+                    </tr>
+                }
 
 
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+        <div class="row m-1">
+            <a asp-controller="Panier" asp-action="ValiderPanier" class="col btn btn-outline-secondary p-1">Valider Panier</a>
+        </div>
+    </div>
 
 
