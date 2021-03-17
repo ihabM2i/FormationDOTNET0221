@@ -80,5 +80,33 @@ namespace Ecommerce.Models
             });
             return liste;
         }
+        public static Produit GetProduit(int id)
+        {
+            Produit produit = null;
+            request = "SELECT id,prix, titre, description FROM produit where id=@id";
+            
+            connection = Connection.New;
+            command = new SqlCommand(request, connection);
+            command.Parameters.Add(new SqlParameter("@id", id));
+            connection.Open();
+            reader = command.ExecuteReader();
+            if(reader.Read())
+            {
+                produit = new Produit()
+                {
+                    Id = reader.GetInt32(0),
+                    Prix = reader.GetDecimal(1),
+                    Titre = reader.GetString(2),
+                    Description = reader.GetString(3)
+                };
+            }
+            
+            reader.Close();
+            command.Dispose();
+            connection.Close();
+            if(produit != null)
+                produit.Images = Image.GetImages(produit.Id);
+            return produit;
+        }
     }
 }

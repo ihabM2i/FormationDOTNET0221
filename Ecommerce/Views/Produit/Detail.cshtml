@@ -1,0 +1,28 @@
+﻿@model Produit
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<div class="col-10 p-1 detailProduit">
+    <h1 class="row m-1">
+        <span class="col">@Model.Titre</span>
+        <span class="col-2">@Model.Prix €</span>
+    </h1>
+    <div class="row m-1">
+        @foreach(Image i in Model.Images)
+        {
+            <div class="col-2">
+                <img src="~/@i.Url" />
+            </div>
+        }
+    </div>
+    <div class="row m-1">
+        <div class="col">
+            @Model.Description
+        </div>
+    </div>
+    <div class="row m-1">
+        <a asp-controller="Panier" asp-action="AjouterAuPanier" asp-route-id="@Model.Id" class="col btn btn-outline-secondary p-1">Ajouter au panier</a>
+    </div>
+</div>
+

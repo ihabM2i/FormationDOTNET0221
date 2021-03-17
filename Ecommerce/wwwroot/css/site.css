@@ -69,6 +69,9 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
-.produits .produit img {
-    width:100%
+.produits .produit img, .detailProduit img {
+    width: 100%
+}
+.imagePanier {
+    width:30px
 }

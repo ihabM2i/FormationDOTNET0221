@@ -28,7 +28,9 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Produit" asp-action="FormProduit">Ajouter produit</a>
                         </li>
                     </ul>
+
                 </div>
+                @await Component.InvokeAsync("PanierBadge")
             </div>
         </nav>
     </header>

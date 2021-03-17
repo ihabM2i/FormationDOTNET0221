@@ -7,7 +7,7 @@
     <div class="row">
         @foreach(Produit p in Model)
         {
-        <div class="produit col-3">
+        <a class="produit col-3" asp-action="Detail" asp-controller="Produit" asp-route-id="@p.Id">
             <div class="row">
                 <div class="col">
                     <img src="~/@p.Images[0].Url" />
@@ -23,7 +23,7 @@
                     @p.Prix €
                 </div>
             </div>
-        </div>
+        </a>
         }
     </div>
 </section>

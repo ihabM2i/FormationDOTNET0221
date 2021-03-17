@@ -58,6 +58,11 @@ namespace Ecommerce.Controllers
 
         }
 
+
+        public IActionResult Detail(int id)
+        {
+            return View(Produit.GetProduit(id));
+        }
         private string Upload(IFormFile image, int produitId, int numero)
         {
             string filePath = Path.Combine(_env.WebRootPath, "images", $"{produitId}-{numero}-{image.FileName}");
