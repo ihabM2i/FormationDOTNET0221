@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "coursAspNetMVC", "coursAspN
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnnuaireAspNetMVC", "AnnuaireAspNetMVC\AnnuaireAspNetMVC.csproj", "{07C8603E-A74A-41C3-A6AD-850661E0C7FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CorrectionCompteBancaireAspNet", "CorrectionCompteBancaireAspNet\CorrectionCompteBancaireAspNet.csproj", "{235CE5D7-1EFE-415D-BAF8-CEEA03E4E4CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CorrectionCompteBancaireAspNet", "CorrectionCompteBancaireAspNet\CorrectionCompteBancaireAspNet.csproj", "{235CE5D7-1EFE-415D-BAF8-CEEA03E4E4CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce", "Ecommerce\Ecommerce.csproj", "{77226592-B31F-4AB3-90F1-F270C7748F5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{235CE5D7-1EFE-415D-BAF8-CEEA03E4E4CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{235CE5D7-1EFE-415D-BAF8-CEEA03E4E4CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{235CE5D7-1EFE-415D-BAF8-CEEA03E4E4CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77226592-B31F-4AB3-90F1-F270C7748F5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77226592-B31F-4AB3-90F1-F270C7748F5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77226592-B31F-4AB3-90F1-F270C7748F5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77226592-B31F-4AB3-90F1-F270C7748F5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,11 @@
+﻿@model List<Categorie>
+<section class="col-2 p-2 shadow-sm bg-white rounded">
+    @foreach(Categorie c in Model)
+    {
+        <div class="row m-1">
+            <div class="col p-1">
+                <a asp-action="Index" asp-controller="Categorie" asp-route-id="@c.Id">@c.Titre</a>
+            </div>
+        </div>
+    }
+</section>

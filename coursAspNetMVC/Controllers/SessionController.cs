@@ -28,5 +28,24 @@ namespace coursAspNetMVC.Controllers
             List<string> liste = JsonConvert.DeserializeObject<List<string>>(HttpContext.Session.GetString("liste"));
             return View(liste);
         }
+
+        public IActionResult AddProductToBasket(int id)
+        {
+            //Recuperer le produit par son id
+            //Verifier si on a un panier session
+            //Si oui on ajoute le produit dans le panier 
+            //Si non on crée le panier et on ajoute le produit
+            //On sauvegarde la session
+            //redirection vers la page du panier
+            return View();
+        }
+
+        public IActionResult Panier()
+        {
+            //On récupère l'objet panier à partir de la session 
+            //Si aucun panier, on affichera un message panier vide
+            // on envoie l'objet à la view
+            return View();
+        }
     }
 }

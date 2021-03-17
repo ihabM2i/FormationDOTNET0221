@@ -1,0 +1,8 @@
+﻿@if (ViewBag.Message != null)
+{
+    <div class="row m-1">
+        <div class="col alert p-1 alert-@ViewBag.TypeMessage">
+            @ViewBag.Message
+        </div>
+    </div>
+}
