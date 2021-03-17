@@ -25,7 +25,7 @@
                         <th scope="row"><img class="imagePanier" src="~/@p.Produit.Images[0].Url" /></th>
                         <td>@p.Produit.Titre</td>
                         <td>@p.Produit.Prix</td>
-                        <td>@p.Qty</td>
+                        <td><a asp-action="ChangeQty" asp-controller="Panier" asp-route-id="@p.Produit.Id" asp-route-type="moin">-</a>@p.Qty<a asp-action="ChangeQty" asp-controller="Panier" asp-route-id="@p.Produit.Id" asp-route-type="plus">+</a></td>
                         <td>@(p.Qty * p.Produit.Prix)</td>
                     </tr>
                 }

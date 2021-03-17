@@ -62,6 +62,27 @@ namespace Ecommerce.Controllers
             }
         }
 
+        public IActionResult ChangeQty(int id, string type) 
+        {
+            Panier panier = GetPanierFromSession();
+            panier.Produits.ForEach(p =>
+            {
+                if (p.Produit.Id == id)
+                {
+                    if (type == "plus")
+                    {
+                        p.Qty += 1;
+                    }
+                    else if (type == "moin")
+                    {
+                        p.Qty = (p.Qty > 0) ? p.Qty - 1 : 0;
+                    }
+                }
+            });
+            SetPanierToSession(panier);
+            return RedirectToAction("Index");
+        }
+
         private Panier GetPanierFromSession()
         {
             Panier panier;
