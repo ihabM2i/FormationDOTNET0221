@@ -18,6 +18,8 @@ namespace Ecommerce.Controllers
         {
             _env = env;
         }
+
+
         [HttpGet]
         public IActionResult FormProduit(string message, string typeMessage)
         {

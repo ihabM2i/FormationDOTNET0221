@@ -6,12 +6,13 @@
         xmlns:local="clr-namespace:AnnuaireMVVM.Views"
         mc:Ignorable="d"
         Title="ContactsWindow" Height="450" Width="820">
+    
     <StackPanel Orientation="Horizontal">
         <GroupBox Header="Formulaire Contact" MinWidth="400">
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Nom : " MinWidth="80"></Label>
-                    <TextBox Text="{Binding Nom}" MinWidth="300"></TextBox>
+                    <TextBox IsReadOnly="true" Text="{Binding Nom}" MinWidth="300"></TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Prénom : " MinWidth="80"></Label>
